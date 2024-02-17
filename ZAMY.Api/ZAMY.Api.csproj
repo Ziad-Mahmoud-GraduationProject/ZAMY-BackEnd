@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ZAMY.Infrastructure\ZAMY.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
