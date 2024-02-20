@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Domain.Entities
 {
-    public class MainCategory
+    public class MainCategory : _BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<Meal> Meals { get; set; } = new HashSet<Meal>();
+        public string Name { get; set; } = null!;
+        public  ICollection<Meal> Meals { get; set; } = new HashSet<Meal>();
     }
 }

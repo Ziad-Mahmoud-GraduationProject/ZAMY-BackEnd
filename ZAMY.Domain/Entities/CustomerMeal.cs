@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Domain.Entities
 {
-    public class CustomerMeal
+    public class CustomerMeal : _BaseEntity
     {
-        public int Id { get;set; }
         public int CustomerId { get; set; }
+        public  Customer Customer { get; set; }
         public int MealId { get; set; }
-        public virtual Customer Customer { get; set; }
-        public virtual Meal Meal { get; set; }
+        public  Meal Meal { get; set; }
     }
 }

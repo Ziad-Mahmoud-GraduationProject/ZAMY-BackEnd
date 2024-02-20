@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Domain.Entities
 {
-    public class PaymentMethod
+    public class PaymentMethod : _BaseEntity
     {
-        public int Id { get; set; }
         public string Method { get; set; }
-        public virtual ICollection<CustomerPayment> CustomerPayments { get; set; } = new HashSet<CustomerPayment>();
+        public  ICollection<CustomerPayment> CustomerPayments { get; set; } = new HashSet<CustomerPayment>();
     }
 }

@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZAMY.Domain.Enums;
-
-namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Domain.Entities
 {
-    public class Customer
+    public class Customer : _BaseEntity
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = string.Empty;
-        public string LastName { get; set; } 
-        public DateOnly BirthOfDate { get; set; }
-        public Gender? Gender { get; set; }
-        public string URLPhoto { get; set; }
-        public virtual ICollection<CustomerAddress> CustomerAddresses { get; set; } = new HashSet<CustomerAddress>();
-        public virtual ICollection<CustomerPayment> CustomerPayments { get; set; } = new HashSet<CustomerPayment>();
-        public virtual ICollection<CustomerPhone> CustomerPhones { get; set; } = new HashSet<CustomerPhone>();
-        public virtual ICollection<CustomerMeal> CustomerMeals { get; set; } = new HashSet<CustomerMeal>();
-        public virtual ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
-        public virtual ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
-        public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
-        public virtual ICollection<Cart> Carts { get; set; } = new HashSet<Cart>();
+        public string LastName { get; set; } = null!;
+        public DateTime BirthOfDate { get; set; }
+        public Gender Gender { get; set; }
+        public string Image { get; set; } = string.Empty;
+        public  ICollection<CustomerAddress> CustomerAddresses { get; set; } = new HashSet<CustomerAddress>();
+        public  ICollection<CustomerPayment> CustomerPayments { get; set; } = new HashSet<CustomerPayment>();
+        public  ICollection<CustomerPhone> CustomerPhones { get; set; } = new HashSet<CustomerPhone>();
+        public  ICollection<CustomerMeal> CustomerMeals { get; set; } = new HashSet<CustomerMeal>();
+        public  ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
+        public  ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+        public  ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+        public  ICollection<Cart> Carts { get; set; } = new HashSet<Cart>();
     }
 }

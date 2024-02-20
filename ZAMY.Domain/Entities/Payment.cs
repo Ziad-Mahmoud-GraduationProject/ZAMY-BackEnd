@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Domain.Entities
 {
-    public class Payment
+    public class Payment : _BaseEntity
     {
-        public int Id { get; set; }
         public string PaymentMethod { get; set; }
         public decimal TotalValue { get; set; }
         public int TransactionId { get; set; }
@@ -16,8 +9,8 @@ namespace ZAMY.Domain.Entities
         public DateTime PaymentDate { get; set; }
         public string PaymentDetailes { get; set; }
         public int CustomerId { get; set; }
+        public  Customer Customer { get; set; }
         public int OrderId { get; set; }
-        public virtual Customer Customer { get; set; }
-        public virtual Order Order { get; set; }
+        public  Order Order { get; set; }
     }
 }

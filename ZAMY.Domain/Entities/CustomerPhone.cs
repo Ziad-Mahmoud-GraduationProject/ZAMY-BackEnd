@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Domain.Entities
 {
-    public class CustomerPhone
+    public class CustomerPhone:_BaseEntity
     {
         public int Phone { get; set; }
         public int CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
+        public  Customer Customer { get; set; }
     }
 }

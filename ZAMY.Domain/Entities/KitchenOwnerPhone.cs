@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Domain.Entities
 {
-    public class KitchenOwnerPhone
+    public class KitchenOwnerPhone : _BaseEntity
     {
         public int Phone { get; set; }
         public int KitchenId { get; set; }
-        public virtual Kitchen Kitchen { get; set; }
+        public  Kitchen Kitchen { get; set; }
     }
 }

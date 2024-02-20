@@ -1,30 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Domain.Entities
 {
-    public  class Kitchen
+    public  class Kitchen : _BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
+        public string Name { get; set; } = null!;
+        public bool IsActive { get; set; }=false;
         public int OwnerId { get; set; }
-        public string FirstName { get; set; }
-        public string? MiddleName { get; set; }
-        public string LastName { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string MiddleName { get; set; }=string.Empty;
+        public string LastName { get; set; } = null!;
         public int NationalId { get; set; }
-        public string Governorate { get; set; }
-        public string City { get; set; }
-        public string Region { get; set; }
-        public string StreetNumber { get; set; }
-        public string StreetName { get; set; }
-        public DateOnly BirthOfDate { get; set; }
-        public string Gender { get; set; }
+        public string Governorate { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string Region { get; set; } = string.Empty;
+        public string StreetNumber { get; set; } = string.Empty;
+        public string StreetName { get; set; } = string.Empty;
+        public DateTime BirthOfDate { get; set; }
+        public Gender Gender { get; set; }
         public int LandLineNumber { get; set; }
-        public virtual ICollection<KitchenPhoto> KitchenPhotos { get; set; } = new HashSet<KitchenPhoto>();
-        public virtual ICollection<KitchenOwnerPhone> KitchenOwnerPhones { get; set; } = new HashSet<KitchenOwnerPhone>();
+        public  ICollection<KitchenPhoto> KitchenPhotos { get; set; } = new HashSet<KitchenPhoto>();
+        public  ICollection<KitchenOwnerPhone> KitchenOwnerPhones { get; set; } = new HashSet<KitchenOwnerPhone>();
     }
 }
