@@ -2,7 +2,7 @@
 {
     public class Review : _BaseEntity
     {
-        public DateTime ReviewDate { get; set; }
+        public DateTime ReviewDate { get; set; } 
         public string Comment { get; set; }
         public double KitchenRating { get; set; }
         public double DeliveryServiceRating { get; set; }

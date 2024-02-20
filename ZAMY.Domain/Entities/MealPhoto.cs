@@ -4,6 +4,6 @@
     {
         public string Image { get; set; }
         public int MealId { get; set; }
-        public Meal Meal { get;set; }
+        public Meal Meal { get; set; }
     }
 }

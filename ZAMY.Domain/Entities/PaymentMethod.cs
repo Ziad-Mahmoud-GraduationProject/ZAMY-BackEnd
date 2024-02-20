@@ -3,6 +3,6 @@
     public class PaymentMethod : _BaseEntity
     {
         public string Method { get; set; }
-        public  ICollection<CustomerPayment> CustomerPayments { get; set; } = new HashSet<CustomerPayment>();
+        public ICollection<CustomerPayment> CustomerPayments { get; set; } = new HashSet<CustomerPayment>();
     }
 }

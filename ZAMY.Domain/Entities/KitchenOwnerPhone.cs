@@ -4,6 +4,6 @@
     {
         public int Phone { get; set; }
         public int KitchenId { get; set; }
-        public  Kitchen Kitchen { get; set; }
+        public Kitchen Kitchen { get; set; }
     }
 }

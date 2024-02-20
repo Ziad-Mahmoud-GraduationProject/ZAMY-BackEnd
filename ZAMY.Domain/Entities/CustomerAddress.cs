@@ -1,6 +1,6 @@
 ﻿namespace ZAMY.Domain.Entities
 {
-    public class CustomerAddress:_BaseEntity
+    public class CustomerAddress : _BaseEntity
     {
         public string Governorate { get; set; }
         public string City { get; set; }

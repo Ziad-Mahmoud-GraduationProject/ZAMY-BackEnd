@@ -3,7 +3,7 @@
     public class Meal : _BaseEntity
     {
         public string Name { get; set; } = null!;
-        public string Description { get; set; }=string.Empty;
+        public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public bool IsAvailable { get; set; }
         public double Rating { get; set; }

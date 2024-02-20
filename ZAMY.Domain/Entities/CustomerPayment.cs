@@ -8,8 +8,8 @@
         public int CredSecurityNumber { get; set; }
         public bool IsDefault { get; set; }
         public int CustomerId { get; set; }
-        public  Customer Customer { get; set; }
+        public Customer Customer { get; set; }
         public int PaymentMethodId { get; set; }
-        public  PaymentMethod PaymentMethod { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
     }
 }
