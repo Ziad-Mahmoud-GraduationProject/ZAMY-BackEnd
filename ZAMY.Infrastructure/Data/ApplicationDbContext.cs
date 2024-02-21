@@ -10,11 +10,11 @@ using ZAMY.Domain.Entities;
 
 namespace ZAMY.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<_UserEntity>
+    public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Cart> Carts { get; set; }

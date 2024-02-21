@@ -12,8 +12,8 @@ using ZAMY.Infrastructure.Data;
 namespace ZAMY.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240221131923_AddTables")]
-    partial class AddTables
+    [Migration("20240221135147_intiail")]
+    partial class intiail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,256 +24,6 @@ namespace ZAMY.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ZAMY.Domain.Common._UserEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("BirthOfDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DeleteOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("UpdateOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("_UserEntity");
-
-                    b.UseTphMappingStrategy();
-                });
 
             modelBuilder.Entity("ZAMY.Domain.Entities.Cart", b =>
                 {
@@ -295,9 +45,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DeleteOn")
                         .HasColumnType("datetime2");
 
@@ -315,7 +62,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Carts");
                 });
@@ -367,6 +114,40 @@ namespace ZAMY.Infrastructure.Migrations
                     b.ToTable("CartItems");
                 });
 
+            modelBuilder.Entity("ZAMY.Domain.Entities.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DeleteOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdateOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("ZAMY.Domain.Entities.CustomerAddress", b =>
                 {
                     b.Property<int>("Id")
@@ -387,9 +168,6 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
-
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DeleteOn")
                         .HasColumnType("datetime2");
@@ -424,7 +202,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("CustomerAddresses");
                 });
@@ -446,9 +224,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DeleteOn")
                         .HasColumnType("datetime2");
 
@@ -469,7 +244,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("MealId");
 
@@ -505,9 +280,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DeleteOn")
                         .HasColumnType("datetime2");
 
@@ -531,7 +303,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("PaymentMethodId");
 
@@ -555,9 +327,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DeleteOn")
                         .HasColumnType("datetime2");
 
@@ -578,7 +347,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("CustomerPhones");
                 });
@@ -620,6 +389,94 @@ namespace ZAMY.Infrastructure.Migrations
                     b.ToTable("Discounts");
                 });
 
+            modelBuilder.Entity("ZAMY.Domain.Entities.Kitchen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BirthOfDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DeleteOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Governorate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LandLineNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MiddleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NationalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Region")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Kitchens");
+                });
+
             modelBuilder.Entity("ZAMY.Domain.Entities.KitchenOwnerPhone", b =>
                 {
                     b.Property<int>("Id")
@@ -646,9 +503,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("KitchenId")
                         .HasColumnType("int");
 
-                    b.Property<string>("KitchenId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Phone")
                         .HasColumnType("int");
 
@@ -660,7 +514,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KitchenId1");
+                    b.HasIndex("KitchenId");
 
                     b.ToTable("KitchenOwnerPhone");
                 });
@@ -695,9 +549,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("KitchenId")
                         .HasColumnType("int");
 
-                    b.Property<string>("KitchenId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("UpdateOn")
                         .HasColumnType("datetime2");
 
@@ -706,7 +557,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KitchenId1");
+                    b.HasIndex("KitchenId");
 
                     b.ToTable("KitchenPhoto");
                 });
@@ -786,9 +637,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("KitchenId")
                         .HasColumnType("int");
 
-                    b.Property<string>("KitchenId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("MainCategoryId")
                         .HasColumnType("int");
 
@@ -819,7 +667,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("KitchenId1");
+                    b.HasIndex("KitchenId");
 
                     b.HasIndex("MainCategoryId");
 
@@ -936,9 +784,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DeleteOn")
                         .HasColumnType("datetime2");
 
@@ -983,7 +828,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasIndex("CustomerAddressId");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("DiscountId");
 
@@ -1006,9 +851,6 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
-
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DeleteOn")
                         .HasColumnType("datetime2");
@@ -1050,7 +892,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("OrderId");
 
@@ -1116,9 +958,6 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("DeleteOn")
                         .HasColumnType("datetime2");
 
@@ -1148,7 +987,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("OrderId");
 
@@ -1193,112 +1032,13 @@ namespace ZAMY.Infrastructure.Migrations
                     b.ToTable("SubCategories");
                 });
 
-            modelBuilder.Entity("ZAMY.Domain.Entities.Customer", b =>
-                {
-                    b.HasBaseType("ZAMY.Domain.Common._UserEntity");
-
-                    b.HasDiscriminator().HasValue("Customer");
-                });
-
-            modelBuilder.Entity("ZAMY.Domain.Entities.Kitchen", b =>
-                {
-                    b.HasBaseType("ZAMY.Domain.Common._UserEntity");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Governorate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LandLineNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NationalId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Region")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Kitchen");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("ZAMY.Domain.Common._UserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("ZAMY.Domain.Common._UserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ZAMY.Domain.Common._UserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("ZAMY.Domain.Common._UserEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ZAMY.Domain.Entities.Cart", b =>
                 {
                     b.HasOne("ZAMY.Domain.Entities.Customer", "Customer")
                         .WithMany("Carts")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
                 });
@@ -1326,7 +1066,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Customer", "Customer")
                         .WithMany("CustomerAddresses")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
                 });
@@ -1335,7 +1077,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Customer", "Customer")
                         .WithMany("CustomerMeals")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ZAMY.Domain.Entities.Meal", "Meal")
                         .WithMany("CustomerMeals")
@@ -1352,7 +1096,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Customer", "Customer")
                         .WithMany("CustomerPayments")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ZAMY.Domain.Entities.PaymentMethod", "PaymentMethod")
                         .WithMany("CustomerPayments")
@@ -1369,7 +1115,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Customer", "Customer")
                         .WithMany("CustomerPhones")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
                 });
@@ -1378,7 +1126,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Kitchen", "Kitchen")
                         .WithMany("KitchenOwnerPhones")
-                        .HasForeignKey("KitchenId1");
+                        .HasForeignKey("KitchenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Kitchen");
                 });
@@ -1387,7 +1137,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Kitchen", "Kitchen")
                         .WithMany("KitchenPhotos")
-                        .HasForeignKey("KitchenId1");
+                        .HasForeignKey("KitchenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Kitchen");
                 });
@@ -1396,7 +1148,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Kitchen", "Kitchen")
                         .WithMany()
-                        .HasForeignKey("KitchenId1");
+                        .HasForeignKey("KitchenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ZAMY.Domain.Entities.MainCategory", "MainCategory")
                         .WithMany("Meals")
@@ -1452,7 +1206,9 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasOne("ZAMY.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ZAMY.Domain.Entities.Discount", "Discount")
                         .WithMany("Orders")
@@ -1473,7 +1229,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Customer", "Customer")
                         .WithMany("Payments")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ZAMY.Domain.Entities.Order", "Order")
                         .WithMany("Payments")
@@ -1490,7 +1248,9 @@ namespace ZAMY.Infrastructure.Migrations
                 {
                     b.HasOne("ZAMY.Domain.Entities.Customer", "Customer")
                         .WithMany("Reviews")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ZAMY.Domain.Entities.Order", "Order")
                         .WithMany()
@@ -1510,9 +1270,35 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("ZAMY.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Carts");
+
+                    b.Navigation("CustomerAddresses");
+
+                    b.Navigation("CustomerMeals");
+
+                    b.Navigation("CustomerPayments");
+
+                    b.Navigation("CustomerPhones");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Payments");
+
+                    b.Navigation("Reviews");
+                });
+
             modelBuilder.Entity("ZAMY.Domain.Entities.Discount", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("ZAMY.Domain.Entities.Kitchen", b =>
+                {
+                    b.Navigation("KitchenOwnerPhones");
+
+                    b.Navigation("KitchenPhotos");
                 });
 
             modelBuilder.Entity("ZAMY.Domain.Entities.MainCategory", b =>
@@ -1542,32 +1328,6 @@ namespace ZAMY.Infrastructure.Migrations
             modelBuilder.Entity("ZAMY.Domain.Entities.SubCategory", b =>
                 {
                     b.Navigation("Meals");
-                });
-
-            modelBuilder.Entity("ZAMY.Domain.Entities.Customer", b =>
-                {
-                    b.Navigation("Carts");
-
-                    b.Navigation("CustomerAddresses");
-
-                    b.Navigation("CustomerMeals");
-
-                    b.Navigation("CustomerPayments");
-
-                    b.Navigation("CustomerPhones");
-
-                    b.Navigation("Orders");
-
-                    b.Navigation("Payments");
-
-                    b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("ZAMY.Domain.Entities.Kitchen", b =>
-                {
-                    b.Navigation("KitchenOwnerPhones");
-
-                    b.Navigation("KitchenPhotos");
                 });
 #pragma warning restore 612, 618
         }

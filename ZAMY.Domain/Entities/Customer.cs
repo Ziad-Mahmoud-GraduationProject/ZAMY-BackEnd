@@ -1,6 +1,6 @@
 ﻿namespace ZAMY.Domain.Entities
 {
-    public class Customer : _UserEntity
+    public class Customer : _BaseEntity
     {
         public ICollection<CustomerAddress> CustomerAddresses { get; set; } = new HashSet<CustomerAddress>();
         public ICollection<CustomerPayment> CustomerPayments { get; set; } = new HashSet<CustomerPayment>();
