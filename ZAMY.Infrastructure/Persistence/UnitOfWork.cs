@@ -39,5 +39,10 @@
         public IBaseRepository<Review> Reviews => new BaseRepository<Review>(_context);
 
         public IBaseRepository<SubCategory> SubCategories => new BaseRepository<SubCategory>(_context);
+
+        public int Complete()
+        {
+           return  _context.SaveChanges();
+        }
     }
 }

@@ -22,5 +22,7 @@
         IBaseRepository<Review> Reviews { get; }
         IBaseRepository<SubCategory> SubCategories { get; }
 
+        int Complete();
+
     }
 }

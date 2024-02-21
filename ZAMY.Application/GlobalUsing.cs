@@ -4,3 +4,6 @@ global using System.Linq.Expressions;
 global using Bookify.Domain.Consts;
 global using Microsoft.EntityFrameworkCore.Query;
 global using ZAMY.Application.Common.Interfaces;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
+global using ZAMY.Application.Services.Meals;
