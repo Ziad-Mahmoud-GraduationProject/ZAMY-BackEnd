@@ -1,15 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using ZAMY.Application.Common.Interfaces.Repositories;
-using ZAMY.Domain.Entities;
-
-namespace ZAMY.Infrastructure.Persistence.Repositories
+﻿namespace ZAMY.Infrastructure.Persistence.Repositories
 {
     public class BaseRepository<T>(ApplicationDbContext _context) : IBaseRepository<T> where T : class
     {
@@ -26,11 +15,6 @@ namespace ZAMY.Infrastructure.Persistence.Repositories
         public IQueryable<T> GetQueryable()
         {
             return _context.Set<T>();
-        }
-
-        public PaginatedList<T> GetPaginatedList(IQueryable<T> query, int pageNumber, int pageSize)
-        {
-            return PaginatedList<T>.Create(query, pageNumber, pageSize);
         }
 
         public T? GetById(int id) => _context.Set<T>().Find(id);

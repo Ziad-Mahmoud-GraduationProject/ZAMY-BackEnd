@@ -7,6 +7,10 @@ namespace ZAMY.Api.Contaollers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok();
+        }
     }
 }

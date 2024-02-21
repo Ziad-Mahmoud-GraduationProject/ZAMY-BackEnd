@@ -1,4 +1,5 @@
-﻿namespace ZAMY.Application.Common.Interfaces.Repositories
+﻿
+namespace ZAMY.Application.Common.Interfaces.Repositories
 {
     public interface IBaseRepository<T> where T : class
     {
