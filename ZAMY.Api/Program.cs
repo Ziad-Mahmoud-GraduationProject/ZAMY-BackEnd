@@ -1,5 +1,7 @@
 
 
+using ZAMY.Api.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +16,9 @@ builder.Services
     .AddInfrastructureServices(builder.Configuration);
 
 
+builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +31,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<GlobalExeptionHandlingMiddleware>();
 
 app.MapControllers();
 

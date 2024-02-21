@@ -10,6 +10,7 @@ namespace ZAMY.Api.Contaollers
         [HttpGet]
         public IActionResult Get()
         {
+           
             return Ok();
         }
     }

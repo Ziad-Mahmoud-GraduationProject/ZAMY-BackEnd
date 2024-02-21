@@ -30,7 +30,6 @@
     <Folder Include="Services\Review\" />
     <Folder Include="Services\PaymentMethod\" />
     <Folder Include="Services\Payment\" />
-    <Folder Include="Services\Order\" />
   </ItemGroup>
 
 </Project>
