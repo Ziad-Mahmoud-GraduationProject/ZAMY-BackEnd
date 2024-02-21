@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using ZAMY.Domain.Common;
 using ZAMY.Domain.Entities;
 
-namespace ZAMY.Infrastructure.Data
+namespace ZAMY.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -35,5 +35,6 @@ namespace ZAMY.Infrastructure.Data
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
+
     }
 }

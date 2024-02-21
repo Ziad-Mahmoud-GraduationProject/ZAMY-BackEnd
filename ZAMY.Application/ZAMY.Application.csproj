@@ -11,8 +11,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Interfase\Repositories\" />
     <Folder Include="Common\Models\" />
+    <Folder Include="Services\Cart\" />
+    <Folder Include="Services\CartItem\" />
+    <Folder Include="Services\Customer\" />
+    <Folder Include="Services\CustomerAddress\" />
+    <Folder Include="Services\CustomerMeal\" />
+    <Folder Include="Services\CustomerPayment\" />
+    <Folder Include="Services\CustomerPhone\" />
+    <Folder Include="Services\Discount\" />
+    <Folder Include="Services\Kitchen\" />
+    <Folder Include="Services\KitchenOwnerPhone\" />
+    <Folder Include="Services\KitchenPhoto\" />
+    <Folder Include="Services\MainCategory\" />
+    <Folder Include="Services\Meal\" />
+    <Folder Include="Services\MealPhoto\" />
+    <Folder Include="Services\SubCategory\" />
+    <Folder Include="Services\Review\" />
+    <Folder Include="Services\PaymentMethod\" />
+    <Folder Include="Services\Payment\" />
+    <Folder Include="Services\Order\" />
   </ItemGroup>
 
 </Project>
