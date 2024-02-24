@@ -28,4 +28,10 @@
     <ProjectReference Include="..\ZAMY.Infrastructure\ZAMY.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dtos\mainCategories\" />
+    <Folder Include="Dtos\subCategories\" />
+    <Folder Include="Dtos\orders\" />
+  </ItemGroup>
+
 </Project>

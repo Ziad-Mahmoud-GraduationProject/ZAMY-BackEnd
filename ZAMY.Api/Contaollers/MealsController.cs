@@ -1,4 +1,6 @@
-﻿namespace ZAMY.Api.Contaollers
+﻿using ZAMY.Api.Dtos.meals;
+
+namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,8 +17,10 @@
         }
 
         [HttpGet("Create")]
-        public IActionResult Create(Meal meal,int mainCategory,int subCategory)
+        public IActionResult Create(CreateMealDTO meal)
         {
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
              _mealService.Add(meal,mainCategory,subCategory,"s");
 
             if (meal is null) return NotFound();
