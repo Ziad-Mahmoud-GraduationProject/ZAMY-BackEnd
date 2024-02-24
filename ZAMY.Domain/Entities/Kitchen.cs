@@ -17,6 +17,7 @@
         public DateTime BirthOfDate { get; set; }
         public Gender Gender { get; set; }
         public int LandLineNumber { get; set; }
+        public ICollection<Meal> Meals { get; set; } = new HashSet<Meal>();
         public ICollection<KitchenPhoto> KitchenPhotos { get; set; } = new HashSet<KitchenPhoto>();
         public ICollection<KitchenOwnerPhone> KitchenOwnerPhones { get; set; } = new HashSet<KitchenOwnerPhone>();
     }

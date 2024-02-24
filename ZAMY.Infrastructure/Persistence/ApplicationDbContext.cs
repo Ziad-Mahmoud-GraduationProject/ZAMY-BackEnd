@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ZAMY.Domain.Common;
@@ -35,6 +36,10 @@ namespace ZAMY.Infrastructure.Persistence
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
 
     }
 }
