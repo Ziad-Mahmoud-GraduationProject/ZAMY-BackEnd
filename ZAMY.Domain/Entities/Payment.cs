@@ -5,7 +5,7 @@
         public string PaymentMethod { get; set; }
         public decimal TotalValue { get; set; }
         public int TransactionId { get; set; }
-        public bool status { get; set; }
+        public bool Status { get; set; }
         public DateTime PaymentDate { get; set; }
         public string PaymentDetailes { get; set; }
         public int CustomerId { get; set; }

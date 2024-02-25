@@ -1,11 +1,14 @@
-﻿namespace ZAMY.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ZAMY.Domain.Entities
 {
     public class Meal : _BaseEntity
     {
         public string Name { get; set; } = null!;
         public string Description { get; set; } = string.Empty;
         public decimal Price { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool IsAvailable { get; set; } = false;
+        [Range(1,5)]
         public double Rating { get; set; }
         public DateTime PreparationTime { get; set; }
         public string Ingredients { get; set; } = string.Empty;
@@ -15,9 +18,10 @@
         public MainCategory MainCategory { get; set; }
         public int SubCategoryId { get; set; }
         public SubCategory SubCategory { get; set; }
+        public int OfferId { get; set; }
+        public Offer Offer { get; set; }
         public int OrderId { get; set; }
-        public Order Order { get; set; }
-        public ICollection<CustomerMeal> CustomerMeals { get; set; } = new HashSet<CustomerMeal>();
+        public Order Order { get; set; } 
         public ICollection<MealPhoto> MealPhotos { get; set; } = new HashSet<MealPhoto>();
         public ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
     }
