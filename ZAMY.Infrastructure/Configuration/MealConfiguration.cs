@@ -28,10 +28,6 @@ namespace ZAMY.Infrastructure.Configuration
                .HasForeignKey(meal => meal.SubCategoryId)
                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(meal => meal.Order)
-               .WithMany(meal => meal.Meals)
-               .HasForeignKey(meal => meal.OrderId)
-               .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

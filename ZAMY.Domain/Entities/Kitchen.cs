@@ -18,6 +18,7 @@
         public Gender Gender { get; set; }
         public int LandLineNumber { get; set; }
         public ICollection<Meal> Meals { get; set; } = new HashSet<Meal>();
+        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
         public ICollection<KitchenPhoto> KitchenPhotos { get; set; } = new HashSet<KitchenPhoto>();
         public ICollection<KitchenOwnerPhone> KitchenOwnerPhones { get; set; } = new HashSet<KitchenOwnerPhone>();
     }

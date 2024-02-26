@@ -21,7 +21,7 @@ namespace ZAMY.Api.Contaollers
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
-             _mealService.Add(meal,mainCategory,subCategory,"s");
+            // _mealService.Add(meal,mainCategory,subCategory,"s");
 
             if (meal is null) return NotFound();
 

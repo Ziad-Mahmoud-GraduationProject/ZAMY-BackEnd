@@ -13,14 +13,6 @@ namespace ZAMY.Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<_UserEntity> builder)
         {
             builder.HasKey(user => user.Id);
-          /*  builder.Property(user => new
-            {
-                user.FirstName,
-                user.MiddleName,
-                user.LastName
-            })
-                .HasMaxLength(30);
-                */
         }
     }
 }

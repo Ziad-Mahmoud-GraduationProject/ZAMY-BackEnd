@@ -7,5 +7,7 @@
         public Meal Meal { get; set; }
         public int CartId { get; set; }
         public Cart Cart { get; set; }
+        public int orderId { get; set; }
+        public Order order { get; set; }
     }
 }

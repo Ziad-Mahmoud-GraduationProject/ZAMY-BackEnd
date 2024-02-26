@@ -10,8 +10,6 @@
 
         public IBaseRepository<CustomerAddress> CustomerAddresses => new BaseRepository<CustomerAddress>(_context);
 
-        public IBaseRepository<CustomerMeal> CustomerMeals => new BaseRepository<CustomerMeal>(_context);
-
         public IBaseRepository<CustomerPayment> CustomerPayments => new BaseRepository<CustomerPayment>(_context);
 
         public IBaseRepository<CustomerPhone> CustomerPhones => new BaseRepository<CustomerPhone>(_context);

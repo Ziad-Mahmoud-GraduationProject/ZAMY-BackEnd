@@ -14,8 +14,7 @@ namespace ZAMY.Infrastructure.Configuration
             builder.HasKey(cart =>cart.Id);
 
             builder.HasOne(cart => cart.Customer)
-               .WithMany(cart => cart.Carts)
-               .HasForeignKey(cart => cart.CustomerId)
+               .WithOne(cart => cart.Cart)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

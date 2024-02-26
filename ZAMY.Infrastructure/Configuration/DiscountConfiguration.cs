@@ -14,8 +14,8 @@ namespace ZAMY.Infrastructure.Configuration
             builder.HasKey(discount => discount.Id);
 
             builder.HasOne(discount => discount.Offer)
-               .WithMany(discount => discount.Discounts)
-               .HasForeignKey(discount => discount.OfferId)
+               .WithOne(discount => discount.Discount)
+               .HasForeignKey<Discount>(discount => discount.OfferId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

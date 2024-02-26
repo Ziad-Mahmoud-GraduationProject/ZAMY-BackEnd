@@ -13,25 +13,16 @@ namespace ZAMY.Infrastructure.Configuration
         {
             builder.HasKey(order => order.Id);
 
+
             builder.HasOne(order => order.Customer)
                .WithMany(order => order.Orders)
                .HasForeignKey(order => order.CustomerId)
                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(order => order.CustomerAddress)
-                .WithMany(order => order.Orders)
-                .HasForeignKey(order => order.CustomerAddressId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(order => order.Cart)
-               .WithMany(order => order.Orders)
-               .HasForeignKey(order => order.CartId)
-               .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasOne(order => order.Offer)
-               .WithMany(order => order.Orders)
-               .HasForeignKey(order => order.OfferId)
-               .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(order => order.Kitchen)
+             .WithMany(order => order.Orders)
+             .HasForeignKey(order => order.KitchenId)
+             .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
