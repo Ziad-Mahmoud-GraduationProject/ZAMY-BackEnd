@@ -20,8 +20,6 @@ namespace ZAMY.Domain.Entities
         public SubCategory SubCategory { get; set; }
         public int OfferId { get; set; }
         public Offer Offer { get; set; }
-        public int OrderId { get; set; }
-        public Order Order { get; set; } 
         public ICollection<MealPhoto> MealPhotos { get; set; } = new HashSet<MealPhoto>();
         public ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
     }
