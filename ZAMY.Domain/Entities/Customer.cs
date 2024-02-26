@@ -6,7 +6,7 @@
         public ICollection<CustomerPayment> CustomerPayments { get; set; } = new HashSet<CustomerPayment>();
         public ICollection<CustomerPhone> CustomerPhones { get; set; } = new HashSet<CustomerPhone>();
         public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
-        public ICollection<Review?> Reviews { get; set; } = new HashSet<Review?>();
+        public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
         public Cart Cart { get; set; } 
     }
 }

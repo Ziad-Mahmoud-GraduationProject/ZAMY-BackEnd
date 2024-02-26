@@ -4,14 +4,14 @@ namespace ZAMY.Domain.Entities
 {
     public class Meal : _BaseEntity
     {
-        public string Name { get; set; } = null!;
-        public string Description { get; set; } = string.Empty;
+        public string Name { get; set; } 
+        public string? Description { get; set; } 
         public decimal Price { get; set; }
         public bool IsAvailable { get; set; } = false;
         [Range(1,5)]
         public double Rating { get; set; }
         public DateTime PreparationTime { get; set; }
-        public string Ingredients { get; set; } = string.Empty;
+        public string Ingredients { get; set; }
         public int KitchenId { get; set; }
         public Kitchen Kitchen { get; set; }
         public int MainCategoryId { get; set; }

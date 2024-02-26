@@ -3,7 +3,7 @@
     public class Order : _BaseEntity
     {
         public string PaymentMethod { get; set; }
-        public bool Status { get; set; }
+        public Status Status { get; set; }
         public DateTime OrderDate { get; set; }
         public string Notes { get; set; }
         public int CartId { get; set; }
