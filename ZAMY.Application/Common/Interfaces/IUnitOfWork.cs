@@ -1,6 +1,6 @@
 ﻿namespace ZAMY.Application.Common.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork:IDisposable
     {
         IBaseRepository<Cart> Carts { get; }
         IBaseRepository<CartItem> CartItems { get; }
