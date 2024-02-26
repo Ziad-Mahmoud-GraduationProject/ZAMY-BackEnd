@@ -13,7 +13,6 @@ namespace ZAMY.Application.Common.Interfaces
         DbSet<CartItem> CartItems { get; set; }
         DbSet<Customer> Customers { get; set; }
         DbSet<CustomerAddress> CustomerAddresses { get; set; }
-        DbSet<CustomerMeal> CustomerMeals { get; set; }
         DbSet<CustomerPayment> CustomerPayments { get; set; }
         DbSet<CustomerPhone> CustomerPhones { get; set; }
         DbSet<Discount> Discounts { get; set; }
