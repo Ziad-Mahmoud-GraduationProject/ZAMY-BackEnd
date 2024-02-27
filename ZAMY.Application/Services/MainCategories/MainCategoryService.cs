@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace ZAMY.Application.Services.MainCategories
 {
-    public class MainCategoryService(IUnitOfWork _uitOfWork) : IMainCategoryService
+    public class MainCategoryService(IUnitOfWork _unitOfWork) : IMainCategoryService
     {
         public IEnumerable<MainCategory> GetAll()
         {
-            throw new NotImplementedException();
+            return _unitOfWork.MainCategories.GetAll();
         }
 
         public MainCategory GetById(int id)
         {
-            throw new NotImplementedException();
+            return _unitOfWork.MainCategories.Find(m => m.Id == id);
         }
 
         public MainCategory GetCategoryName(string maincategoryName)
