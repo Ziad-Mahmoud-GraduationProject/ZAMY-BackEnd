@@ -23,7 +23,6 @@
     <Folder Include="Services\Kitchens\" />
     <Folder Include="Services\KitchenOwnerPhones\" />
     <Folder Include="Services\KitchenPhotos\" />
-    <Folder Include="Services\MainCategories\" />
     <Folder Include="Services\MealPhotos\" />
     <Folder Include="Services\SubCategories\" />
     <Folder Include="Services\Reviews\" />

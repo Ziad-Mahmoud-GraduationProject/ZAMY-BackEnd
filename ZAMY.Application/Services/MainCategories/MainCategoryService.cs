@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZAMY.Domain.Entities;
 
 namespace ZAMY.Application.Services.MainCategories
 {
@@ -24,16 +25,23 @@ namespace ZAMY.Application.Services.MainCategories
         }
         public MainCategory Add(MainCategory maincategory)
         {
-            throw new NotImplementedException();
+            _unitOfWork.MainCategories.Add(maincategory);
+            _unitOfWork.Complete();
+            return maincategory;
         }
         public MainCategory Update(MainCategory maincategory)
         {
-            throw new NotImplementedException();
+
+            _unitOfWork.MainCategories.Update(maincategory);
+            _unitOfWork.Complete();
+            return maincategory;
         }
 
-        public MainCategory Delete(int id)
+        public MainCategory Delete(MainCategory maincategory)
         {
-            throw new NotImplementedException();
+            _unitOfWork.MainCategories.Remove(maincategory);
+            _unitOfWork.Complete();
+            return maincategory;
         }
     }
 }
