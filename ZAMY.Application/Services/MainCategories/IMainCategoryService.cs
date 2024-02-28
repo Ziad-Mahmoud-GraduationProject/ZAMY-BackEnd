@@ -10,7 +10,7 @@ namespace ZAMY.Application.Services.MainCategories
     {
         IEnumerable<MainCategory> GetAll();
         MainCategory GetById(int id);
-        MainCategory GetCategoryName(string maincategoryName);
+        IEnumerable<MainCategory> GetCategoryName(string maincategoryName);
         MainCategory Add(MainCategory maincategory);
         MainCategory Update(MainCategory maincategory);
         MainCategory Delete(MainCategory maincategory);
