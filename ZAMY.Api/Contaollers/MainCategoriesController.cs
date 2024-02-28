@@ -32,9 +32,21 @@ namespace ZAMY.Api.Contaollers
 
                 if (maincategories is null)
 
-                    return NotFound($"not found any category has {id} !");
+                    return NotFound($"not found any category has {id} Id !");
 
                 return Ok(maincategories);
+        }
+        [HttpGet("GetByName{name}")]
+        public IActionResult GetByName(string name)
+        {
+
+            var subcategories = _maincategoryservice.GetCategoryName(name);
+
+            if (subcategories is null)
+
+                return NotFound($"not found any category has {name} Name !");
+
+            return Ok(subcategories);
         }
         [HttpPost("Add")]
         public IActionResult Add(MainCategoryDto dto)
@@ -53,7 +65,7 @@ namespace ZAMY.Api.Contaollers
 
             if (maincategory is null)
 
-                return NotFound($"not found any category has {id} !");
+                return NotFound($"not found any category has {id} Id !");
 
             maincategory.Name = dto.Name;
             _maincategoryservice.Update(maincategory);
@@ -66,7 +78,7 @@ namespace ZAMY.Api.Contaollers
 
             if (maincategory is null)
 
-                return NotFound($"not found any category has {id} !");
+                return NotFound($"not found any category has {id} Id !");
             _maincategoryservice.Delete(maincategory);
             return Ok(maincategory);
 
