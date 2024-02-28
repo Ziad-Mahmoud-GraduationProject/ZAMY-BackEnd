@@ -1,4 +1,5 @@
 ﻿using ZAMY.Application.Services.MainCategories;
+using ZAMY.Application.Services.SubCategories;
 
 namespace ZAMY.Application
 {
@@ -8,7 +9,7 @@ namespace ZAMY.Application
         {
             services.AddScoped<IMealService, MealService>();
             services.AddScoped<IMainCategoryService, MainCategoryService>();
-
+            services.AddScoped<ISubCategoryService, SubCategoryService>();
             return services;
         }
     }
