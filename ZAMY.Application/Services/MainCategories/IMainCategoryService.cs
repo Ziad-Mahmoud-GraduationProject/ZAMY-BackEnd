@@ -4,7 +4,7 @@
     {
         IEnumerable<MainCategory> GetAll();
         MainCategory GetById(int id);
-        MainCategory GetCategoryName(string maincategoryName);
+        IEnumerable<MainCategory> GetCategoryName(string maincategoryName);
         MainCategory Add(MainCategory maincategory);
         MainCategory Update(MainCategory maincategory);
         MainCategory ToggelStatus(MainCategory maincategory);

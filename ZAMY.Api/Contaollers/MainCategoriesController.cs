@@ -42,12 +42,27 @@ namespace ZAMY.Api.Contaollers
 
                 if (maincategory is null)
 
-                    return NotFound($"not found any category has {id} !");
+                    return NotFound($"not found any category has {id} Id !");
 
                 return Ok(maincategory);
         }
+<<<<<<< HEAD
 
 
+=======
+        [HttpGet("GetByName{name}")]
+        public IActionResult GetByName(string name)
+        {
+
+            var subcategories = _maincategoryservice.GetCategoryName(name);
+
+            if (subcategories is null)
+
+                return NotFound($"not found any category has {name} Name !");
+
+            return Ok(subcategories);
+        }
+>>>>>>> 936ad19888e0b403a108110f24e49f9d68bee6da
         [HttpPost("Add")]
         public IActionResult Add(CreateMainCategoryDto dto)
         {
@@ -63,7 +78,11 @@ namespace ZAMY.Api.Contaollers
 
             if (maincategory is null)
 
+<<<<<<< HEAD
                 return NotFound($"not found any category has {dto.Id} !");
+=======
+                return NotFound($"not found any category has {id} Id !");
+>>>>>>> 936ad19888e0b403a108110f24e49f9d68bee6da
 
             maincategory.Name = dto.Name; 
 
@@ -78,9 +97,15 @@ namespace ZAMY.Api.Contaollers
 
             if (maincategory is null)
 
+<<<<<<< HEAD
                 return NotFound($"not found any category has {id} !");
 
             return Ok(_mapper.Map<CreateMainCategoryDto>(_maincategoryservice.ToggelStatus(maincategory)));
+=======
+                return NotFound($"not found any category has {id} Id !");
+            _maincategoryservice.Delete(maincategory);
+            return Ok(maincategory);
+>>>>>>> 936ad19888e0b403a108110f24e49f9d68bee6da
 
         }
     }
