@@ -1,21 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ZAMY.Api.Dtos.mainCategories;
-using ZAMY.Application.Common.Interfaces;
-using ZAMY.Application.Services.MainCategories;
-using ZAMY.Domain.Entities;
+﻿using ZAMY.Api.Dtos.mainCategories.outcoming;
 
 namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MainCategoriesController(IMainCategoryService _maincategoryservice) : ControllerBase
+    public class MainCategoriesController
+        (IMainCategoryService _maincategoryservice,IMapper _mapper) 
+        : ControllerBase
     {
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
 
-                var maincategories = _maincategoryservice.GetAll();
+                var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll());
 
                 if (maincategories is null)
 
@@ -24,51 +21,66 @@ namespace ZAMY.Api.Contaollers
                 return Ok(maincategories);   
         }
 
+
+        [HttpGet("Get With Meals")]
+        public IActionResult Get(int id)
+        {
+            var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll());
+
+            if (maincategories is null)
+
+                return NotFound("not found any category !");
+
+            return Ok(maincategories);
+        }
+
         [HttpGet("GetById{id}")]
         public IActionResult GetById(int id)
         {
            
-                var maincategories = _maincategoryservice.GetById(id);
+                var maincategory = _mapper.Map<MainCategoryDto>(_maincategoryservice.GetById(id));
 
-                if (maincategories is null)
+                if (maincategory is null)
 
                     return NotFound($"not found any category has {id} !");
 
-                return Ok(maincategories);
+                return Ok(maincategory);
         }
+
+
         [HttpPost("Add")]
-        public IActionResult Add(MainCategoryDto dto)
+        public IActionResult Add(CreateMainCategoryDto dto)
         {
-            var maincategory = new MainCategory
-            {
-                Name=dto.Name
-            };
-            _maincategoryservice.Add(maincategory);
-            return Ok(maincategory);
+            var maincategory = _mapper.Map<MainCategory>(dto);
+
+            return Ok(_mapper.Map<MainCategoryDto>(_maincategoryservice.Add(maincategory)));
+
         }
         [HttpPut("Update")]
-        public IActionResult Update(int id,MainCategoryDto dto)
+        public IActionResult Update(EditMainCategory dto)
         {
-            var maincategory = _maincategoryservice.GetById(id);
+            var maincategory = _maincategoryservice.GetById(dto.Id);
 
             if (maincategory is null)
 
-                return NotFound($"not found any category has {id} !");
+                return NotFound($"not found any category has {dto.Id} !");
 
-            maincategory.Name = dto.Name;
-            _maincategoryservice.Update(maincategory);
-            return Ok(maincategory);
+            maincategory.Name = dto.Name; 
+
+            return Ok(_mapper.Map<MainCategoryDto>(_maincategoryservice.Update(maincategory)));
         }
-        [HttpDelete]
-        public IActionResult Delete(int id)
+
+
+        [HttpPost("Toggel Status")]
+        public IActionResult ToggelStatus(int id)
         {
             var maincategory = _maincategoryservice.GetById(id);
 
             if (maincategory is null)
 
                 return NotFound($"not found any category has {id} !");
-            _maincategoryservice.Delete(maincategory);
-            return Ok(maincategory);
+
+            return Ok(_mapper.Map<CreateMainCategoryDto>(_maincategoryservice.ToggelStatus(maincategory)));
 
         }
     }

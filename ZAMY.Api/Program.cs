@@ -1,5 +1,4 @@
-
-
+using ZAMY.Api.Mapping;
 using ZAMY.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +16,8 @@ builder.Services
 
 
 builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
 var app = builder.Build();
