@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ZAMY.Api.Dtos.subcategories;
+﻿using ZAMY.Api.Dtos.subcategories;
 using ZAMY.Application.Services.SubCategories;
-
 namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]

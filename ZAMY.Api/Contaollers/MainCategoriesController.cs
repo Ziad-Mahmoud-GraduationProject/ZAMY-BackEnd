@@ -1,6 +1,4 @@
-﻿using ZAMY.Api.Dtos.mainCategories.outcoming;
-
-namespace ZAMY.Api.Contaollers
+﻿namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]
     [ApiController]
