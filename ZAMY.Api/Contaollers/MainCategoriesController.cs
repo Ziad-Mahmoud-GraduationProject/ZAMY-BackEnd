@@ -11,7 +11,7 @@ namespace ZAMY.Api.Contaollers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-
+                
                 var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll());
 
                 if (maincategories is null)
@@ -20,7 +20,6 @@ namespace ZAMY.Api.Contaollers
 
                 return Ok(maincategories);   
         }
-
 
         [HttpGet("Get With Meals")]
         public IActionResult Get(int id)
