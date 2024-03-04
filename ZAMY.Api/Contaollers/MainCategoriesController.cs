@@ -19,7 +19,7 @@
                 return Ok(maincategories);   
         }
 
-        [HttpGet("GetWithMeals")]
+        [HttpGet("GetWithMeals/{id}")]
         public IActionResult Get(int id)
         {
             var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll());
@@ -31,7 +31,7 @@
             return Ok(maincategories);
         }
 
-        [HttpGet("GetById{id}")]
+        [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
            
@@ -44,7 +44,7 @@
                 return Ok(maincategory);
         }
 
-        [HttpGet("GetByName{name}")]
+        [HttpGet("GetByName/{name}")]
         public IActionResult GetByName(string name)
         {
 

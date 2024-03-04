@@ -6,7 +6,7 @@ namespace ZAMY.Api.Contaollers
     [ApiController]
     public class MealsController(IMealService _mealService) : ControllerBase
     {
-        [HttpGet("GetById{Id}")]
+        [HttpGet("GetById/{Id}")]
         public IActionResult Get(int id)
         {
             var meal = _mealService.GetById(id);
