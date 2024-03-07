@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Common\Models\" />
     <Folder Include="Services\Carts\" />
-    <Folder Include="Services\CartItems\" />
     <Folder Include="Services\Customers\" />
     <Folder Include="Services\CustomerAddresses\" />
     <Folder Include="Services\CustomerMeals\" />
