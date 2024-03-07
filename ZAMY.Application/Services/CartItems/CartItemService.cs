@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ZAMY.Application.Services.CartItems
 {
-    public class CartItemService(IUnitOfWork _unitOfWork) : ICartItemService
+    public class CartItemService(IUnitOfWork _unitOfWork,
+        IMealService _mealService) : ICartItemService
     {
         public IEnumerable<CartItem> GetAll() => _unitOfWork.CartItems.GetAll();
 
@@ -15,7 +16,9 @@ namespace ZAMY.Application.Services.CartItems
 
         public decimal GetPrice(int id)
         {
-            throw new NotImplementedException();
+            var cartItem= _unitOfWork.CartItems.Find(c => c.Id == id,["Meal"]);
+            var price= cartItem.Quantity *cartItem.Meal.Price;
+            return price;
         }
 
         public CartItem Update(CartItem item)
