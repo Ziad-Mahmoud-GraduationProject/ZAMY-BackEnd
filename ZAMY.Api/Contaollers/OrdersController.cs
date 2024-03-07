@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace ZAMY.Api.Contaollers
+﻿namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]
     [ApiController]

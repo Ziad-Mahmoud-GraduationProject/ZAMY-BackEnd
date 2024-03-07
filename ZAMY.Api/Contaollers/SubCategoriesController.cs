@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ZAMY.Api.Dtos.subcategories;
+﻿using ZAMY.Api.Dtos.subcategories;
 using ZAMY.Application.Services.SubCategories;
-
 namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]
@@ -16,13 +13,12 @@ namespace ZAMY.Api.Contaollers
             var maincategories = _subCategoryService.GetAll();
 
             if (maincategories is null)
-
                 return NotFound("not found any category !");
 
             return Ok(maincategories);
         }
 
-        [HttpGet("GetById{id}")]
+        [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
 
@@ -34,7 +30,7 @@ namespace ZAMY.Api.Contaollers
 
             return Ok(subcategories);
         }
-        [HttpGet("GetByName{name}")]
+        [HttpGet("GetByName/{name}")]
         public IActionResult GetByName(string name)
         {
 
@@ -57,7 +53,7 @@ namespace ZAMY.Api.Contaollers
 
             return Ok(subCategory);
         }
-        [HttpPut("Update{id}")]
+        [HttpPut("Update/{id}")]
         public IActionResult Update(int id, SubCategoryDto dto)
         {
             var subCategory = _subCategoryService.GetById(id);
@@ -72,7 +68,7 @@ namespace ZAMY.Api.Contaollers
 
             return Ok(subCategory);
         }
-        [HttpDelete("Delete{id}")]
+        [HttpDelete("Delete/{id}")]
         public IActionResult Delete(int id)
         {
             var subCategory = _subCategoryService.GetById(id);

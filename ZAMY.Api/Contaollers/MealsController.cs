@@ -11,13 +11,6 @@ namespace ZAMY.Api.Contaollers
         IMainCategoryService _mainCategoryService,
         ISubCategoryService _subCategoryService ) : ControllerBase
     {
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
-        {
-            var meals = _mealService.GetAll();
-            if(meals == null) return NotFound("Not Found Any Meals");
-            return Ok(meals);
-        }
         [HttpGet("GetById{Id}")]
         public IActionResult Get(int id)
         {
