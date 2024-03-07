@@ -2,9 +2,11 @@
 {
     public interface IMealService
     {
-        Meal? GetById(int id);
-        Meal Add(Meal meal, int mainCategory, int subCategory, string createdById);
-        Meal Update(Meal meal, int mainCategory, int subCategory, string updatedById);
-        Meal? ToggleStatus(int id, string updatedById);
+        IEnumerable<Meal> GetAll();
+        Meal GetById(int id);
+        bool IsExists(int id);
+        Meal Add(Meal meal);
+        Meal Update(Meal meal);
+        Meal? ToggleStatus(int id);
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ZAMY.Application.Services.MainCategories
+﻿namespace ZAMY.Application.Services.MainCategories
 {
     public interface IMainCategoryService
     {
@@ -13,6 +7,6 @@ namespace ZAMY.Application.Services.MainCategories
         IEnumerable<MainCategory> GetCategoryName(string maincategoryName);
         MainCategory Add(MainCategory maincategory);
         MainCategory Update(MainCategory maincategory);
-        MainCategory Delete(MainCategory maincategory);
+        MainCategory ToggelStatus(MainCategory maincategory);
     }
 }

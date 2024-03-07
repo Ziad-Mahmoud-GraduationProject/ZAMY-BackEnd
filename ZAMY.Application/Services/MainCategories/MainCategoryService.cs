@@ -29,14 +29,15 @@ namespace ZAMY.Application.Services.MainCategories
         public MainCategory Update(MainCategory maincategory)
         {
 
+
             _unitOfWork.MainCategories.Update(maincategory);
             _unitOfWork.Complete();
             return maincategory;
         }
 
-        public MainCategory Delete(MainCategory maincategory)
+        public MainCategory ToggelStatus(MainCategory maincategory)
         {
-            _unitOfWork.MainCategories.Remove(maincategory);
+            maincategory.IsDeleted = !maincategory.IsDeleted;
             _unitOfWork.Complete();
             return maincategory;
         }

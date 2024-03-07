@@ -20,13 +20,16 @@
     <Folder Include="Services\CustomerPayments\" />
     <Folder Include="Services\CustomerPhones\" />
     <Folder Include="Services\Discounts\" />
-    <Folder Include="Services\Kitchens\" />
     <Folder Include="Services\KitchenOwnerPhones\" />
-    <Folder Include="Services\KitchenPhotos\" />
     <Folder Include="Services\MealPhotos\" />
     <Folder Include="Services\Reviews\" />
     <Folder Include="Services\PaymentMethods\" />
     <Folder Include="Services\Payments\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

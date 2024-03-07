@@ -1,4 +1,6 @@
-﻿using ZAMY.Application.Services.MainCategories;
+﻿using ZAMY.Application.Services.KitchenPhotos;
+using ZAMY.Application.Services.Kitchens;
+using ZAMY.Application.Services.MainCategories;
 using ZAMY.Application.Services.SubCategories;
 
 namespace ZAMY.Application
@@ -10,6 +12,8 @@ namespace ZAMY.Application
             services.AddScoped<IMealService, MealService>();
             services.AddScoped<IMainCategoryService, MainCategoryService>();
             services.AddScoped<ISubCategoryService, SubCategoryService>();
+            services.AddScoped<IKitchenService, KitchenService>();
+            //services.AddScoped<IKitchenPhotoService, KitchenPhotoService>();
             return services;
         }
     }

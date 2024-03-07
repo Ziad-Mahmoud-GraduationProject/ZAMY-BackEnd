@@ -7,3 +7,9 @@ global using System.Net;
 global using Microsoft.AspNetCore.Mvc;
 global using ZAMY.Application.Services.Meals;
 global using ZAMY.Domain.Entities;
+global using ZAMY.Api.Dtos.mainCategories.incoming;
+global using AutoMapper;
+global using ZAMY.Application.Services.MainCategories;
+global using ZAMY.Api.Dtos.mainCategories.outcoming;
+
+
