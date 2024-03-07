@@ -31,17 +31,20 @@ namespace ZAMY.Api.Contaollers
             var dto = _mapper.Map<CartItemDto>(cartItem);
             return Ok(dto);
         }
+        [HttpGet("Price/{id}")]
+        public IActionResult GetPrice(int id)
+        {
+            var cartItem = _cartItemService.GetById(id);
+            if (cartItem is null)
+                return NotFound($"NotFound Any CartItem has {id} Id");
+            decimal price = _cartItemService.GetPrice(id);
+           
+            return Ok(new {price=price});
+        }
         [HttpPost("Add")]
         public IActionResult Add(CreateCartItem item)
         {
             var cartItem=_mapper.Map<CartItem>(item);
-            /*var cartItem = new CartItem
-            {
-                Quantity= item.Quantity,
-                MealId= item.MealId,
-                CartId= item.CartId,
-                orderId=item.orderId
-            };*/
             _cartItemService.Add(cartItem);
             return Ok(cartItem);
         }
