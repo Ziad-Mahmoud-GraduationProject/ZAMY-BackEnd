@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZAMY.Application.Services.CartItems
 {
-    public class CartItemService(IUnitOfWork _unitOfWork,
-        IMealService _mealService) : ICartItemService
+    public class CartItemService(IUnitOfWork _unitOfWork) : ICartItemService
     {
         public IEnumerable<CartItem> GetAll() => _unitOfWork.CartItems.GetAll();
 
