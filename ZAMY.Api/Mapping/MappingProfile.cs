@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using ZAMY.Api.Dtos.CartItem.incommig;
-using ZAMY.Api.Dtos.CartItem.outcomming;
-using ZAMY.Api.Dtos.Kitchen.incoming;
-using ZAMY.Api.Dtos.Kitchen.outcoming;
-using ZAMY.Api.Dtos.Orders.incomming;
-using ZAMY.Api.Dtos.Orders.outcomming;
-
+﻿
 namespace ZAMY.Api.Mapping
 {
     public class MappingProfileMainCategory : Profile
@@ -38,6 +31,14 @@ namespace ZAMY.Api.Mapping
         {
             CreateMap<Order, OrderDto>();
             CreateMap<CreateOrder,Order>();
+        }
+    }
+    public class MappingProfileReview : Profile
+    {
+        public MappingProfileReview()
+        {
+            CreateMap<Review, ReviewDto>();
+            CreateMap<CreateReview, Review>();
         }
     }
 }
