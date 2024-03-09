@@ -11,5 +11,14 @@ global using ZAMY.Api.Dtos.mainCategories.incoming;
 global using AutoMapper;
 global using ZAMY.Application.Services.MainCategories;
 global using ZAMY.Api.Dtos.mainCategories.outcoming;
+global using ZAMY.Api.Dtos.CartItem.incommig;
+global using ZAMY.Api.Dtos.CartItem.outcomming;
+global using ZAMY.Api.Dtos.Kitchen.incoming;
+global using ZAMY.Api.Dtos.Kitchen.outcoming;
+global using ZAMY.Api.Dtos.Orders.incomming;
+global using ZAMY.Api.Dtos.Orders.outcomming;
+global using ZAMY.Api.Dtos.Review.incomming;
+global using ZAMY.Api.Dtos.Review.outcomming;
+global using System.ComponentModel.DataAnnotations;
 
 
