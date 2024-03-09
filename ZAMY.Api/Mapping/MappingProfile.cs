@@ -3,6 +3,8 @@ using ZAMY.Api.Dtos.CartItem.incommig;
 using ZAMY.Api.Dtos.CartItem.outcomming;
 using ZAMY.Api.Dtos.Kitchen.incoming;
 using ZAMY.Api.Dtos.Kitchen.outcoming;
+using ZAMY.Api.Dtos.Orders.incomming;
+using ZAMY.Api.Dtos.Orders.outcomming;
 
 namespace ZAMY.Api.Mapping
 {
@@ -28,6 +30,14 @@ namespace ZAMY.Api.Mapping
         {
             CreateMap<CreateCartItem, CartItem>();
             CreateMap<CartItem, CartItemDto>();
+        }
+    }
+    public class MappingProfileOrder : Profile
+    {
+        public MappingProfileOrder()
+        {
+            CreateMap<Order, OrderDto>();
+            CreateMap<CreateOrder,Order>();
         }
     }
 }
