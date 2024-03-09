@@ -58,6 +58,20 @@
 
             return query.ToList();
         }
+        public IEnumerable<T> FindAll( Expression<Func<T, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            if (orderBy is not null)
+            {
+                if (orderByDirection == OrderBy.Ascending)
+                    query = query.OrderBy(orderBy);
+                else
+                    query = query.OrderByDescending(orderBy);
+            }
+
+            return query.ToList();
+        }
 
         public IEnumerable<T> FindAll(Expression<Func<T, bool>> predicate, int? skip = null, int? take = null,
             Expression<Func<T, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending)
