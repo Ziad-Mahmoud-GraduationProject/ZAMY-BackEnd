@@ -14,6 +14,7 @@ namespace ZAMY.Application.Common.Interfaces.Repositories
             Expression<Func<T, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending);
         IEnumerable<T> FindAll(Expression<Func<T, bool>> predicate,
             Expression<Func<T, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending);
+        IEnumerable<T> FindAll(Expression<Func<T, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending);
         IEnumerable<T> FindAll(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
             Expression<Func<T, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending);
         T Add(T entity);
