@@ -1,6 +1,4 @@
-﻿using ZAMY.Api.Dtos.mainCategories.outcoming;
-
-namespace ZAMY.Api.Contaollers
+﻿namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -11,7 +9,7 @@ namespace ZAMY.Api.Contaollers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-
+                
                 var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll());
 
                 if (maincategories is null)
@@ -21,8 +19,7 @@ namespace ZAMY.Api.Contaollers
                 return Ok(maincategories);   
         }
 
-
-        [HttpGet("Get With Meals")]
+        [HttpGet("GetWithMeals/{id}")]
         public IActionResult Get(int id)
         {
             var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll());
@@ -34,7 +31,7 @@ namespace ZAMY.Api.Contaollers
             return Ok(maincategories);
         }
 
-        [HttpGet("GetById{id}")]
+        [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
            
@@ -47,7 +44,7 @@ namespace ZAMY.Api.Contaollers
                 return Ok(maincategory);
         }
 
-        [HttpGet("GetByName{name}")]
+        [HttpGet("GetByName/{name}")]
         public IActionResult GetByName(string name)
         {
 
@@ -85,7 +82,7 @@ namespace ZAMY.Api.Contaollers
         }
 
 
-        [HttpPost("Toggel Status")]
+        [HttpPost("ToggelStatus")]
         public IActionResult ToggelStatus(int id)
         {
             var maincategory = _maincategoryservice.GetById(id);
