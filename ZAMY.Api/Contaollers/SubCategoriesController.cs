@@ -1,4 +1,5 @@
 ﻿using ZAMY.Api.Dtos.subcategories;
+using ZAMY.Application.Common.Helper;
 using ZAMY.Application.Services.SubCategories;
 namespace ZAMY.Api.Contaollers
 {
@@ -11,6 +12,17 @@ namespace ZAMY.Api.Contaollers
         {
 
             var maincategories = _subCategoryService.GetAll();
+
+            if (maincategories is null)
+                return NotFound("not found any category !");
+
+            return Ok(maincategories);
+        }
+        [HttpGet("GetAllWithPagination")]
+        public IActionResult GetAllWithPagination([FromQuery]PaginationParameters paginationParameters)
+        {
+
+            var maincategories = _subCategoryService.GetAllWithPagination(paginationParameters);
 
             if (maincategories is null)
                 return NotFound("not found any category !");
