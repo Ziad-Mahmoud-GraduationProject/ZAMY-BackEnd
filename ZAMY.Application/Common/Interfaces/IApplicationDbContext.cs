@@ -9,7 +9,7 @@ namespace ZAMY.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<Cart> Carts { get; set; }
+
         DbSet<CartItem> CartItems { get; set; }
         DbSet<Customer> Customers { get; set; }
         DbSet<CustomerAddress> CustomerAddresses { get; set; }

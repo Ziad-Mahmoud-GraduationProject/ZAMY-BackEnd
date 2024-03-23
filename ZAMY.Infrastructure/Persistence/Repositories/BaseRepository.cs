@@ -58,7 +58,7 @@
 
             return query.ToList();
         }
-        public IEnumerable<T> FindAll( Expression<Func<T, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending)
+        public IEnumerable<T> FindAll(Expression<Func<T, object>>? orderBy = null, string? orderByDirection = OrderBy.Ascending)
         {
             IQueryable<T> query = _context.Set<T>();
 

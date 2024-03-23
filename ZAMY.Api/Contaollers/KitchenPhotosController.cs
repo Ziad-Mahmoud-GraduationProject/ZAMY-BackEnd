@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ZAMY.Application.Services.KitchenPhotos;
 
-namespace ZAMY.Api.Contaollers
+namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

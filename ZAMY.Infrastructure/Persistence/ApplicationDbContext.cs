@@ -17,8 +17,6 @@ namespace ZAMY.Infrastructure.Persistence
         {
 
         }
-
-        public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerAddress> CustomerAddresses { get; set; }

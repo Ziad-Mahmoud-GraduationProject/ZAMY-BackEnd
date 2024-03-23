@@ -1,6 +1,6 @@
 ﻿using ZAMY.Api.Dtos.subcategories;
 using ZAMY.Application.Services.SubCategories;
-namespace ZAMY.Api.Contaollers
+namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

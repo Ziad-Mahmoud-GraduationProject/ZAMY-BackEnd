@@ -9,9 +9,17 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\**" />
+    <Compile Remove="images\**" />
+    <Compile Remove="NewFolder\**" />
     <Content Remove="Controllers\**" />
+    <Content Remove="images\**" />
+    <Content Remove="NewFolder\**" />
     <EmbeddedResource Remove="Controllers\**" />
+    <EmbeddedResource Remove="images\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Controllers\**" />
+    <None Remove="images\**" />
+    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,8 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="images\" />
-    <Folder Include="NewFolder\" />
+    <Folder Include="Dtos\Categories\incoming\" />
   </ItemGroup>
 
 </Project>

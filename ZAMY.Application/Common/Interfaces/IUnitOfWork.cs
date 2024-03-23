@@ -2,9 +2,9 @@
 {
     public interface IUnitOfWork:IDisposable
     {
-        IBaseRepository<Cart> Carts { get; }
         IBaseRepository<CartItem> CartItems { get; }
         IBaseRepository<Customer> Customers { get; }
+        IBaseRepository<Category> Categories { get; }
         IBaseRepository<CustomerAddress> CustomerAddresses { get; }
         IBaseRepository<CustomerPayment> CustomerPayments { get; }
         IBaseRepository<CustomerPhone> CustomerPhones { get; }

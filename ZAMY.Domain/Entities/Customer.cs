@@ -8,6 +8,5 @@
         public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
         public ICollection<Payment> Payments { get; set; } = new HashSet<Payment>();
         public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
-        public Cart Cart { get; set; } 
     }
 }

@@ -2,7 +2,7 @@
 using ZAMY.Api.Dtos.Orders.outcomming;
 using ZAMY.Application.Services.Orders;
 
-namespace ZAMY.Api.Contaollers
+namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

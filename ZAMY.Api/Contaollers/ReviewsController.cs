@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ZAMY.Application.Services.Reviews;
 using ZAMY.Domain.Entities;
 
-namespace ZAMY.Api.Contaollers
+namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

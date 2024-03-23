@@ -2,11 +2,12 @@
 {
     public class UnitOfWork(ApplicationDbContext _context) : IUnitOfWork
     {
-        public IBaseRepository<Cart> Carts => new BaseRepository<Cart>(_context);
 
         public IBaseRepository<CartItem> CartItems => new BaseRepository<CartItem>(_context);
 
         public IBaseRepository<Customer> Customers => new BaseRepository<Customer>(_context);
+
+        public IBaseRepository<Category> Categories => new BaseRepository<Category>(_context);
 
         public IBaseRepository<CustomerAddress> CustomerAddresses => new BaseRepository<CustomerAddress>(_context);
 
@@ -37,6 +38,7 @@
         public IBaseRepository<Review> Reviews => new BaseRepository<Review>(_context);
 
         public IBaseRepository<SubCategory> SubCategories => new BaseRepository<SubCategory>(_context);
+
 
         public int Complete()
         {

@@ -6,7 +6,7 @@ using ZAMY.Api.Dtos.CartItem.outcomming;
 using ZAMY.Application.Services.CartItems;
 using ZAMY.Domain.Entities;
 
-namespace ZAMY.Api.Contaollers
+namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -57,7 +57,6 @@ namespace ZAMY.Api.Contaollers
 
             cartItem.Quantity = item.Quantity;
             cartItem.MealId = item.MealId;
-            cartItem.CartId = item.CartId;
             cartItem.orderId = item.orderId;
     
             _cartItemService.Update(cartItem);

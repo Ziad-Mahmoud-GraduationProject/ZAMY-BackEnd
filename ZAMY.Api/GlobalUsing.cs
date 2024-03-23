@@ -1,8 +1,5 @@
 ﻿global using ZAMY.Application;
 global using ZAMY.Infrastructure;
-global using System.Linq.Expressions;
-global using Microsoft.EntityFrameworkCore.Query;
-global using Bookify.Domain.Consts;
 global using System.Net;
 global using Microsoft.AspNetCore.Mvc;
 global using ZAMY.Application.Services.Meals;
@@ -20,5 +17,8 @@ global using ZAMY.Api.Dtos.Orders.outcomming;
 global using ZAMY.Api.Dtos.Review.incomming;
 global using ZAMY.Api.Dtos.Review.outcomming;
 global using System.ComponentModel.DataAnnotations;
+global using ZAMY.Application.Common.Helper;
+global using ZAMY.Application.Services.Kitchens;
+global using ZAMY.Application.Services.Categories;
 
 

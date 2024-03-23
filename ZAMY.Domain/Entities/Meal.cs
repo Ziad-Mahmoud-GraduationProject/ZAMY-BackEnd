@@ -22,5 +22,7 @@ namespace ZAMY.Domain.Entities
         public Offer Offer { get; set; }
         public ICollection<MealPhoto> MealPhotos { get; set; } = new HashSet<MealPhoto>();
         public ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
+        public ICollection<Addition> Additions { get; set; } = new HashSet<Addition>();
+        public ICollection<Choices> Choices { get; set; } = new HashSet<Choices>();
     }
 }

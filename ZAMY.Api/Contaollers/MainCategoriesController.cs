@@ -1,4 +1,4 @@
-﻿namespace ZAMY.Api.Contaollers
+﻿namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
