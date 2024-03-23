@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZAMY.Application.Common.Helper;
 
 namespace ZAMY.Application.Services.SubCategories
 {
     public class SubCategoryService(IUnitOfWork _unitOfWork) : ISubCategoryService
     {
         public IEnumerable<SubCategory> GetAll()=> _unitOfWork.SubCategories.GetAll();
-
+        public PagedList<SubCategory> GetAllWithPagination(PaginationParameters paginationParameters)
+        {
+            return PagedList<SubCategory>.GetPagedList(_unitOfWork.SubCategories.GetAll(),paginationParameters.PageNumber,paginationParameters.PageSize);
+        }
         public SubCategory GetById(int id)=> _unitOfWork.SubCategories.GetById(id);
 
         public IEnumerable<SubCategory> GetCategoryName(string subcategoryname)
