@@ -1,12 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using ZAMY.Api.Dtos.CartItem.incommig;
-using ZAMY.Api.Dtos.CartItem.outcomming;
-using ZAMY.Application.Services.CartItems;
-using ZAMY.Domain.Entities;
-
-namespace ZAMY.Api.Controllers
+﻿namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

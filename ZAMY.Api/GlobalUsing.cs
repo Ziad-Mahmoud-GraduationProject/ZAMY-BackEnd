@@ -20,5 +20,7 @@ global using System.ComponentModel.DataAnnotations;
 global using ZAMY.Application.Common.Helper;
 global using ZAMY.Application.Services.Kitchens;
 global using ZAMY.Application.Services.Categories;
+global using ZAMY.Application.Services.CartItems;
+
 
 

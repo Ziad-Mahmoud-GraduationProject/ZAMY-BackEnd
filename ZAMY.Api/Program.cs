@@ -35,7 +35,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseMiddleware<GlobalExeptionHandlingMiddleware>();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseMiddleware<GlobalExeptionHandlingMiddleware>();
+}
 
 app.MapControllers();
 

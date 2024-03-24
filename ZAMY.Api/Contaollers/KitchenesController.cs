@@ -14,7 +14,8 @@ namespace ZAMY.Api.Controllers
         public ActionResult<ApiResponse> Get()
         {
             var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetAll());
-            return new ApiResponse(kitchens.Any() ? kitchens : null);
+
+            return new ApiResponse();
 
         }
 
@@ -25,7 +26,7 @@ namespace ZAMY.Api.Controllers
         {
             var kitchen = _mapper.Map<KitchenDto>(_kitchenService.GetById(id));
 
-            return new ApiResponse(kitchen);
+            return new ApiResponse();
 
         }
 
@@ -36,7 +37,7 @@ namespace ZAMY.Api.Controllers
         {
             var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetKitchenName(name));
 
-            return new ApiResponse(kitchens.Any() ? kitchens : null);
+            return new ApiResponse();
 
         }      
     }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace ZAMY.Api.Middlewares
 {
@@ -17,12 +16,11 @@ namespace ZAMY.Api.Middlewares
 
                 _logger.LogError(e, e.Message);
 
-                ProblemDetails problemDetails = new()
+                ApiResponse problemDetails = new()
                 {
-                    Status = (int)HttpStatusCode.InternalServerError,
-                    Type = "Server Error",
-                    Title = "Server Error",
-                    Detail = "Internal Server Error"
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    IsSuccess = false,
+                    ErrorMessage = { "Internal Server Error" }
                 };
 
                 string json = JsonSerializer.Serialize(problemDetails);

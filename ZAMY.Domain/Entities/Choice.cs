@@ -1,6 +1,6 @@
 ﻿namespace ZAMY.Domain.Entities
 {
-    public class Choices
+    public class Choice
     {
         public int Id { get; set; }
 

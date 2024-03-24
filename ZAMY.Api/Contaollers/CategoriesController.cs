@@ -13,7 +13,7 @@ namespace ZAMY.Api.Contaollers
         { 
             var categories = _mapper.Map<IEnumerable<CategoryDto>>(_categoryService.GetAll());
 
-            return new ApiResponse(categories);
+            return new ApiResponse();
         }
 
 
@@ -22,7 +22,7 @@ namespace ZAMY.Api.Contaollers
         {
             var category = _mapper.Map<CategoryDto>(_categoryService.GetById(id));
 
-            return new ApiResponse(category);
+            return new ApiResponse();
         }
 
         [HttpGet("name/{name}")]
@@ -31,7 +31,7 @@ namespace ZAMY.Api.Contaollers
             var category = _mapper.Map<IEnumerable<CategoryDto>>(_categoryService.GetByName(name));
 
 
-            return new ApiResponse(category);
+            return new ApiResponse();
         }
 
 
@@ -40,7 +40,7 @@ namespace ZAMY.Api.Contaollers
         { 
             var category = _categoryService.Add(_mapper.Map<Category>(categoryDto));
 
-            return new ApiResponse(category);
+            return new ApiResponse();
         }
 
 
