@@ -21,6 +21,11 @@ global using ZAMY.Application.Common.Helper;
 global using ZAMY.Application.Services.Kitchens;
 global using ZAMY.Application.Services.Categories;
 global using ZAMY.Application.Services.CartItems;
+global using Bookify.Domain.Consts;
+global using Microsoft.AspNetCore.Http;
+//global using Microsoft.AspNetCore.Mvc;
+global using ZAMY.Application.Services.Reviews;
+//global using ZAMY.Domain.Entities;
 
 
 

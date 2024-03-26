@@ -1,8 +1,4 @@
-﻿using Bookify.Domain.Consts;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ZAMY.Application.Services.Reviews;
-using ZAMY.Domain.Entities;
+﻿
 
 namespace ZAMY.Api.Controllers
 {
@@ -12,25 +8,25 @@ namespace ZAMY.Api.Controllers
         IMapper _mapper) : ControllerBase
     {
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] PaginationParameters paginationParameters)
         {
-            var reviews= _reviewService.GetAll();
+            var reviews= _reviewService.GetAll(paginationParameters);
             if(reviews is null)
                 return NotFound("Not Found any Review");
            return Ok( _mapper.Map<IEnumerable<ReviewDto>>(reviews));
         }
         [HttpGet("NewersReview")]
-        public IActionResult NewersReview()
+        public IActionResult NewersReview([FromQuery] PaginationParameters paginationParameters)
         {
-            var reviews = _reviewService.NewersReview();
+            var reviews = _reviewService.NewersReview(paginationParameters);
             if (reviews is null)
                 return NotFound("Not Found any Review");
             return Ok(_mapper.Map<IEnumerable<ReviewDto>>(reviews));
         }
         [HttpGet("OldersReview")]
-        public IActionResult OldersReview()
+        public IActionResult OldersReview([FromQuery] PaginationParameters paginationParameters)
         {
-            var reviews = _reviewService.OldersReview();
+            var reviews = _reviewService.OldersReview(paginationParameters);
             if (reviews is null)
                 return NotFound("Not Found any Review");
             return Ok(_mapper.Map<IEnumerable<ReviewDto>>(reviews));
