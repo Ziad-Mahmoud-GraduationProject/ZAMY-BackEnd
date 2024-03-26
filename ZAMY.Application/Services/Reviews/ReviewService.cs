@@ -1,21 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace ZAMY.Application.Services.Reviews
 {
     public class ReviewService(IUnitOfWork _unitOfWork) : IReviewService
     {
- 
-        public IEnumerable<Review> GetAll()=>_unitOfWork.Reviews.GetAll();
-        
-        public IEnumerable<Review> NewersReview()=>_unitOfWork.Reviews.
-                FindAll(orderBy:r=>r.ReviewDate , "DESC");
-            
-        public IEnumerable<Review> OldersReview() => _unitOfWork.Reviews.
-                FindAll(orderBy: r => r.ReviewDate, "ASC");
+
+        public PagedList<Review> GetAll(PaginationParameters paginationParameters)
+        {
+            return PagedList<Review>
+                .GetPagedList(_unitOfWork.Reviews.GetAll(),
+                paginationParameters.PageNumber,
+                paginationParameters.PageSize);
+        }
+
+
+        public PagedList<Review> NewersReview(PaginationParameters paginationParameters)
+        {
+            return PagedList<Review>
+                .GetPagedList(_unitOfWork.Reviews
+                .FindAll(orderBy: r => r.ReviewDate, "DESC"),
+                paginationParameters.PageNumber,
+                paginationParameters.PageSize);
+        }
+
+        public PagedList<Review> OldersReview(PaginationParameters paginationParameters)
+        {
+            return PagedList<Review>
+               .GetPagedList(_unitOfWork.Reviews
+               .FindAll(orderBy: r => r.ReviewDate, "ASC"),
+               paginationParameters.PageNumber,
+               paginationParameters.PageSize);
+        }
 
         public Review GetById(int id) => _unitOfWork.Reviews.GetById(id);
 
