@@ -2,8 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using ZAMY.Api;
-using ZAMY.Api.Mapping;
+using ZAMY.Api; 
 using ZAMY.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,8 +31,6 @@ builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
 
 //Authentication
-
-
 builder.Services.AddAuthentication(option =>
 {
     option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,9 +48,6 @@ builder.Services.AddAuthentication(option =>
             ValidateAudience = false
         };
     });
-
-
-
 
 //Swagger
 builder.Services.AddSwaggerGen(c =>
@@ -100,8 +94,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseMiddleware<GlobalExeptionHandlingMiddleware>();
