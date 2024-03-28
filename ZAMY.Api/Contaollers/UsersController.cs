@@ -326,6 +326,20 @@ namespace ZAMY.Api.Contaollers
                     });
                 }
 
+
+
+                var role = await _roleManager.FindByNameAsync(model.Role);
+                if (role == null)
+                {
+                    return NotFound(new ApiResponse
+                    {
+                        IsSuccess = false,
+                        StatusCode = HttpStatusCode.NotFound,
+                        ErrorMessage = new List<string> { "Role not found." },
+                    });
+                }
+
+
                 await _userManager.AddToRoleAsync(user, model.Role);
 
                 var jwtSecurityToken = await _token.GetTokenAsync(user);
@@ -549,8 +563,170 @@ namespace ZAMY.Api.Contaollers
             }
 
         }
+ 
+        [HttpPost("ChangeRole")]
+        public async Task<ActionResult> ChangeUserRole([FromBody] ChangeUserRoleDto model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorMessage = new List<string> { $"{ModelState}", "Model is not valid" },
+                });
 
-             [HttpPut("UpdateAsync/{id}")]
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+            {
+                return NotFound(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    ErrorMessage = new List<string>()
+                          {
+                              "User not found in system",
+                          }
+                });
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var currentRole = roles.FirstOrDefault();
+
+            if (currentRole == null || currentRole == model.NewRole)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorMessage = new List<string> { "Invalid role." },
+                });
+            }
+
+            var resultRemove = await _userManager.RemoveFromRoleAsync(user, currentRole);
+            var resultAdd = await _userManager.AddToRoleAsync(user, model.NewRole);
+
+            if (resultRemove.Succeeded && resultAdd.Succeeded)
+            {
+                return Ok(new ApiResponse
+                {
+                    Result = model,
+                    ErrorMessage = new List<string>() { $"User's role has been changed to {model.NewRole}." }
+                });
+            }
+            else
+            {
+                return BadRequest(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorMessage = new List<string> { "Failed to change user's role." },
+                });
+            }
+        }
+
+
+        [HttpPost("AddRoleToUserById/{UserId}")]
+        public async Task<ActionResult> AddUserRole(string UserId, string roleName)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorMessage = new List<string> { $"{ModelState}", "Model is not valid" },
+                });
+
+            var user = await _userManager.FindByIdAsync(UserId);
+            if (user == null)
+            {
+                return NotFound(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    ErrorMessage = new List<string>()
+                          {
+                              "User not found in system",
+                          }
+                });
+            }
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role == null)
+            {
+                return NotFound(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    ErrorMessage = new List<string> { "Role not found." },
+                });
+            }
+
+            await _userManager.AddToRoleAsync(user, roleName);
+
+            return Ok(new ApiResponse() { Result="Add Role"});
+        }
+
+
+
+
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(new ApiResponse
+                    {
+                        IsSuccess = false,
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorMessage = new List<string> { $"{ModelState}", "Model is not valid" },
+                    });
+
+
+                var user = new EmailAddressAttribute().IsValid(model.Email)
+                                   ? await _userManager.FindByEmailAsync(model.Email) : await _userManager.FindByNameAsync(model.Email);
+
+                if (user == null)
+                {
+                    user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.Email) == null
+                    ? await _userManager.Users.FirstOrDefaultAsync(u => u.NationalId == model.Email)
+                    : await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.Email);
+                }
+
+
+                if (user == null)
+                    return NotFound(new ApiResponse() { IsSuccess = false, StatusCode = HttpStatusCode.NotFound, ErrorMessage = new List<string>() { "Admin not found" } });
+
+
+                var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                if (!changePasswordResult.Succeeded)
+                    return BadRequest(new ApiResponse
+                    {
+                        IsSuccess = false,
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorMessage = new List<string>() { $"{ModelState}", "Error in Result !" },
+                        Result = changePasswordResult.Errors.ToList()
+                    });
+
+                await _signInManager.RefreshSignInAsync(user);
+                return Ok(new ApiResponse
+                {
+                    Result = "Your password has been changed successfully."
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorMessage = new List<string>() { ex.Message },
+                });
+            }
+        }
+
+       
+        [HttpPut("UpdateAsync/{id}")]
         public async Task<IActionResult> UpdateAsync(string id, RegisterDto model)
         {
             try
