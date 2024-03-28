@@ -683,15 +683,8 @@ namespace ZAMY.Api.Contaollers
                     });
 
 
-                var user = new EmailAddressAttribute().IsValid(model.Email)
-                                   ? await _userManager.FindByEmailAsync(model.Email) : await _userManager.FindByNameAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(model.Email);
 
-                if (user == null)
-                {
-                    user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.Email) == null
-                    ? await _userManager.Users.FirstOrDefaultAsync(u => u.NationalId == model.Email)
-                    : await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.Email);
-                }
 
 
                 if (user == null)
