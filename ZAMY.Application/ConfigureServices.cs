@@ -1,4 +1,5 @@
-﻿using ZAMY.Application.Services.CartItems;
+﻿using ZAMY.Application.Services;
+using ZAMY.Application.Services.CartItems;
 using ZAMY.Application.Services.Categories;
 using ZAMY.Application.Services.KitchenPhotos;
 using ZAMY.Application.Services.Kitchens;
@@ -21,6 +22,7 @@ namespace ZAMY.Application
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ITokenServices, TokenServices>();
             return services;
         }
     }

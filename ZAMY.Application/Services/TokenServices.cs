@@ -1,13 +1,4 @@
 ﻿
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using ZAMY.Application.Common.Helper;
-using ZAMY.Application.Common.Interfaces;
-using ZAMY.Domain.Consts;
-using ZAMY.Infrastructure;
 
 namespace ZAMY.Application.Services
 {

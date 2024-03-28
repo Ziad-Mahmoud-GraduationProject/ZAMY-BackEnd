@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using ZAMY.Api; 
 using ZAMY.Api.Middlewares;
+using ZAMY.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ builder.Services
     .AddMappingServices()
     .AddInfrastructureServices(builder.Configuration);
 
-
+ 
 builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
 
 //builder.Services.AddAutoMapper(typeof(MappingProfile));
