@@ -8,11 +8,11 @@ using ZAMY.Domain.Common;
 
 namespace ZAMY.Infrastructure.Configuration
 {
-    //internal class _UserConfiguration : IEntityTypeConfiguration<_UserEntity>
-    //{
-    //    public void Configure(EntityTypeBuilder<_UserEntity> builder)
-    //    {
-    //       builder.HasKey(user => user.Id);
-    //    }
-    //}
+    internal class _UserConfiguration : IEntityTypeConfiguration<_UserEntity>
+    {
+        public void Configure(EntityTypeBuilder<_UserEntity> builder)
+        {
+            builder.HasKey(user => user.Id);
+        }
+    }
 }

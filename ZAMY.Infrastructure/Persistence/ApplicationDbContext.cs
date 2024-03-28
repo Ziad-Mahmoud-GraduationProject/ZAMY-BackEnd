@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Reflection;
 
 namespace ZAMY.Infrastructure.Persistence
 {
@@ -24,10 +25,10 @@ namespace ZAMY.Infrastructure.Persistence
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
 
     }
 }
