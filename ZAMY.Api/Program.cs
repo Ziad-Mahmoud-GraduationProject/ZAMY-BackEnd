@@ -93,7 +93,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseFileServer();
 app.UseAuthentication();
 app.UseAuthorization();
 if (!app.Environment.IsDevelopment())
