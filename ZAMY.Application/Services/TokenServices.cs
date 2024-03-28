@@ -2,20 +2,15 @@
 
 namespace ZAMY.Application.Services
 {
-    class TokenServices :  ITokenServices
-    { 
-        private readonly UserManager<IdentityUser> _userManager; 
+    public class TokenServices : ITokenServices
+    {
         private readonly JWT _jwt;
-        public TokenServices(UserManager<IdentityUser> UserManager,IOptions<JWT> jwt )
-        { 
-            _jwt = jwt.Value;
-            _userManager = UserManager; 
-        } 
-        public async Task<JwtSecurityToken> GetTokenAsync(IdentityUser user)
+        public TokenServices(IOptions<JWT> jwt)
         {
-
-            var userClaims = await _userManager.GetClaimsAsync(user);
-            var roles = await _userManager.GetRolesAsync(user);
+            _jwt = jwt.Value;
+        }
+        public async Task<JwtSecurityToken> GetTokenAsync(IList<Claim> userClaims, IList<string> roles, IdentityUser user)
+        {
             var roleClaims = new List<Claim>();
 
             foreach (var role in roles)

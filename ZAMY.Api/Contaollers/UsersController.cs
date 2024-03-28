@@ -263,9 +263,9 @@ namespace ZAMY.Api.Contaollers
 
 
                 // create token for the user
-                var jwtSecurityToken = await _token.GetTokenAsync(user);
                 var Roles = await _userManager.GetRolesAsync(user);
- 
+                var jwtSecurityToken = await _token.GetTokenAsync(await _userManager.GetClaimsAsync(user), Roles, user);
+            
 
                 return Ok(new ApiResponse
                 {
@@ -342,9 +342,10 @@ namespace ZAMY.Api.Contaollers
 
                 await _userManager.AddToRoleAsync(user, model.Role);
 
-                var jwtSecurityToken = await _token.GetTokenAsync(user);
+                // create token for the user
                 var Roles = await _userManager.GetRolesAsync(user);
-                 
+                var jwtSecurityToken = await _token.GetTokenAsync(await _userManager.GetClaimsAsync(user), Roles, user);
+
                 return Ok(new ApiResponse
                 {
                     ErrorMessage = new List<string>() { "User Added Sucsessfully !" },

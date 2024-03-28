@@ -10,6 +10,6 @@ namespace ZAMY.Infrastructure
 {
     public interface ITokenServices
     {
-         Task<JwtSecurityToken> GetTokenAsync(IdentityUser user);
+         Task<JwtSecurityToken> GetTokenAsync(IList<Claim> userClaims, IList<string> roles, IdentityUser user);
     }
 }

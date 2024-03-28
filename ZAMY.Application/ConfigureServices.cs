@@ -22,7 +22,7 @@ namespace ZAMY.Application
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ITokenServices, TokenServices>();
+           // services.AddScoped<ITokenServices, TokenServices>();
             return services;
         }
     }

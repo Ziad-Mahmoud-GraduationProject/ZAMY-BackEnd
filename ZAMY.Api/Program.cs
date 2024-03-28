@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using ZAMY.Api; 
 using ZAMY.Api.Middlewares;
-using ZAMY.Infrastructure;
+using ZAMY.Application.Services; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +26,7 @@ builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
 //builder.Services.AddAutoMapper(typeof(MappingProfile));
 //builder.Services.AddMappingServices();
 
-
+builder.Services.AddScoped<ITokenServices, TokenServices>();
 
 //JWT
 builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
