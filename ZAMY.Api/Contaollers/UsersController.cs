@@ -16,15 +16,12 @@ namespace ZAMY.Api.Contaollers
     [ApiController]
     public class UsersController : ControllerBase
     {
-       
-        private readonly ApplicationDbContext _db;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ITokenServices _token;
-        public UsersController(UserManager<IdentityUser> UserManager, ApplicationDbContext db, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, ITokenServices token)
-        {
-            _db = db; 
+        public UsersController(UserManager<IdentityUser> UserManager , SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, ITokenServices token)
+        { 
             _userManager = UserManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
@@ -211,8 +208,7 @@ namespace ZAMY.Api.Contaollers
                 ErrorMessage = new List<string> { "Role  found." },
             });
         }
-  
-
+   
         [HttpGet("CheackUserIsActiveById")]
         public async Task<IActionResult> CheackUserIsActiveById(string id)
         {
@@ -241,10 +237,7 @@ namespace ZAMY.Api.Contaollers
             });
 
         } 
-
-
-
-
+ 
         [AllowAnonymous, HttpPost("LoginAsync")]
         public async Task<IActionResult> LoginAsync(LoginDto login)
         {
@@ -665,11 +658,7 @@ namespace ZAMY.Api.Contaollers
 
             return Ok(new ApiResponse() { Result="Add Role"});
         }
-
-
-
-
-
+ 
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
         {

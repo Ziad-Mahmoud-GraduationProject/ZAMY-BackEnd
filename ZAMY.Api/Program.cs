@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using ZAMY.Api; 
+using ZAMY.Api;
 using ZAMY.Api.Middlewares;
+using ZAMY.Application.Common.Seed;
 using ZAMY.Application.Services; 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -91,6 +93,23 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+
+// Seed Data
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>(); 
+
+    await AddRole.SeedAsync(roleManager);
+    await Adduser.SeedServerAsync(userManager, roleManager ); 
+}
+catch (Exception)
+{
+
 }
 
 app.UseHttpsRedirection();
