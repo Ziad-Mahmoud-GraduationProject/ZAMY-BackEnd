@@ -6,7 +6,9 @@ using System.Text;
 using ZAMY.Api;
 using ZAMY.Api.Middlewares;
 using ZAMY.Application.Common.Seed;
-using ZAMY.Application.Services; 
+using ZAMY.Application.Services;
+using ZAMY.Domain.Common;
+using ZAMY.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +24,9 @@ builder.Services
     .AddMappingServices()
     .AddInfrastructureServices(builder.Configuration);
 
- 
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
 builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
 
 //builder.Services.AddAutoMapper(typeof(MappingProfile));
