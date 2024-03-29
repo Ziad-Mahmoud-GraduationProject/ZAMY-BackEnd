@@ -11,9 +11,9 @@ namespace ZAMY.Api.Controllers
 
 
         [HttpGet("")]
-        public ActionResult<ApiResponse> Get()
+        public ActionResult<ApiResponse> Get([FromQuery] PaginationParameters paginationParameters)
         {
-            var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetAll());
+            var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetAll(paginationParameters));
 
             return new ApiResponse();
 
@@ -33,9 +33,9 @@ namespace ZAMY.Api.Controllers
 
 
         [HttpGet("name/{name}")]
-        public ActionResult<ApiResponse> Get(string name)
+        public ActionResult<ApiResponse> Get(string name, [FromQuery] PaginationParameters paginationParameters)
         {
-            var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetKitchenName(name));
+            var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetKitchenName(name, paginationParameters));
 
             return new ApiResponse();
 
