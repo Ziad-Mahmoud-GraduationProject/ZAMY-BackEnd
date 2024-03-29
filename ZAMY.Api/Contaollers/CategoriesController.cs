@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using ZAMY.Api.Dtos.Categories.outcoming;
 
 namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class CategoriesController(ICategoryService _categoryService, IMapper _mapper) : ControllerBase
     {
 

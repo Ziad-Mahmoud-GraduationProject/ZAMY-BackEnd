@@ -1,4 +1,5 @@
 ﻿using ZAMY.Api.Mapping;
+using ZAMY.Infrastructure;
 
 namespace ZAMY.Api
 {
@@ -8,6 +9,7 @@ namespace ZAMY.Api
         {
             services.AddAutoMapper(typeof(MappingProfileKitchen),
                  typeof(MappingProfileMainCategory));
+             
             return services;
         }
     }

@@ -1,7 +1,10 @@
-﻿namespace ZAMY.Api.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MainCategoriesController
         (IMainCategoryService _maincategoryservice,IMapper _mapper) 
         : ControllerBase

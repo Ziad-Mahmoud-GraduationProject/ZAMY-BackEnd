@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ZAMY.Domain.Common
 {
-    public class _UserEntity:IdentityUser
+    public class _UserEntity : IdentityUser
     {
         public string FirstName { get; set; } = null!;
         public string MiddleName { get; set; } = string.Empty;
