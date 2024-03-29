@@ -9,8 +9,18 @@ namespace ZAMY.Api.Controllers
     public class MealsController(IMealService _mealService,
         IKitchenService _kitchenService,
         IMainCategoryService _mainCategoryService,
-        ISubCategoryService _subCategoryService ) : ControllerBase
+        ISubCategoryService _subCategoryService,
+        IMapper _mapper) : ControllerBase
     {
+        [HttpGet("GetAll")]
+        public IActionResult GetAll([FromQuery]PaginationParameters paginationParameters)
+        {
+            var meal = _mealService.GetAll(paginationParameters);
+
+            if (meal is null) return NotFound($"Not Found Any Meal !");
+
+            return Ok(meal);
+        }
         [HttpGet("GetById{Id}")]
         public IActionResult Get(int id)
         {
