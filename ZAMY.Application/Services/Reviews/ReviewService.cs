@@ -5,7 +5,7 @@ namespace ZAMY.Application.Services.Reviews
     public class ReviewService(IUnitOfWork _unitOfWork) : IReviewService
     {
 
-        public PagedList<Review> GetAll(PaginationParameters paginationParameters)
+        public IEnumerable<Review> GetAll(PaginationParameters paginationParameters)
         {
             return PagedList<Review>
                 .GetPagedList(_unitOfWork.Reviews.GetAll(),
@@ -14,20 +14,20 @@ namespace ZAMY.Application.Services.Reviews
         }
 
 
-        public PagedList<Review> NewersReview(PaginationParameters paginationParameters)
+        public IEnumerable<Review> NewersReview(PaginationParameters paginationParameters)
         {
             return PagedList<Review>
                 .GetPagedList(_unitOfWork.Reviews
-                .FindAll(orderBy: r => r.ReviewDate, "DESC"),
+                .FindAll(orderBy: r => r.ReviewDate, OrderBy.Descending),
                 paginationParameters.PageNumber,
                 paginationParameters.PageSize);
         }
 
-        public PagedList<Review> OldersReview(PaginationParameters paginationParameters)
+        public IEnumerable<Review> OldersReview(PaginationParameters paginationParameters)
         {
             return PagedList<Review>
                .GetPagedList(_unitOfWork.Reviews
-               .FindAll(orderBy: r => r.ReviewDate, "ASC"),
+               .FindAll(orderBy: r => r.ReviewDate, OrderBy.Ascending),
                paginationParameters.PageNumber,
                paginationParameters.PageSize);
         }

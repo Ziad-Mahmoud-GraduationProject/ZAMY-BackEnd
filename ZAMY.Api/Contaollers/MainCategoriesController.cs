@@ -7,10 +7,10 @@
         : ControllerBase
     {
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] PaginationParameters paginationParameters)
         {
                 
-                var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll());
+                var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll(paginationParameters));
 
                 if (maincategories is null)
 
@@ -18,8 +18,9 @@
 
                 return Ok(maincategories);   
         }
+        // EXplain or maintain or test
 
-        [HttpGet("GetWithMeals/{id}")]
+       /* [HttpGet("GetWithMeals/{id}")]
         public IActionResult Get(int id)
         {
             var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll());
@@ -29,7 +30,7 @@
                 return NotFound("not found any category !");
 
             return Ok(maincategories);
-        }
+        }*/
 
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
@@ -45,16 +46,15 @@
         }
 
         [HttpGet("GetByName/{name}")]
-        public IActionResult GetByName(string name)
+        public IActionResult GetByName(string name, [FromQuery] PaginationParameters paginationParameters)
         {
-
-            var subcategories = _maincategoryservice.GetCategoryName(name);
-
-            if (subcategories is null)
+            var maincategories = _mapper.Map<MainCategoryDto>(_maincategoryservice.GetCategoryName(name, paginationParameters));
+           
+            if (maincategories is null)
 
                 return NotFound($"not found any category has {name} Name !");
 
-            return Ok(subcategories);
+            return Ok(maincategories);
         }
 
         [HttpPost("Add")]

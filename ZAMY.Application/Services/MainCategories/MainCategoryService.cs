@@ -3,22 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZAMY.Application.Common.Helper;
 using ZAMY.Domain.Entities;
 
 namespace ZAMY.Application.Services.MainCategories
 {
     public class MainCategoryService(IUnitOfWork _unitOfWork) : IMainCategoryService
     {
-        public IEnumerable<MainCategory> GetAll()=> _unitOfWork.MainCategories.GetAll();
- 
+        // public IEnumerable<MainCategory> GetAll()=> _unitOfWork.MainCategories.GetAll();
+        public IEnumerable<MainCategory> GetAll(PaginationParameters paginationParameters)
+        {
+            return PagedList<MainCategory>
+                .GetPagedList(_unitOfWork.MainCategories.GetAll(),
+                paginationParameters.PageNumber,
+                paginationParameters.PageSize);
+        }
+
+
         public MainCategory GetById(int id)=> _unitOfWork.MainCategories.GetById(id);
 
-        public IEnumerable<MainCategory> GetCategoryName(string maincategoryName)
+        public IEnumerable<MainCategory> GetCategoryName(string maincategoryName, PaginationParameters paginationParameters)
         {
-            var maincategories = _unitOfWork.MainCategories.GetAll();
-            return maincategories
+            var maincategories = _unitOfWork.MainCategories.GetAll()
                 .Where(maincategory => maincategory.Name.ToLower()
                 .Contains(maincategoryName.ToLower()));
+            return PagedList<MainCategory>
+                .GetPagedList(maincategories,
+            paginationParameters.PageNumber,
+                paginationParameters.PageSize);
         }
         public MainCategory Add(MainCategory maincategory)
         {
