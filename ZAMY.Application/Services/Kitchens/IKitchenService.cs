@@ -8,9 +8,9 @@ namespace ZAMY.Application.Services.Kitchens
 {
     public interface IKitchenService
     {
-        IEnumerable<Kitchen>? GetAll();
+        IEnumerable<Kitchen> GetAll(PaginationParameters paginationParameters);
         Kitchen? GetById(int id);
         bool IsExists(int id);
-        IEnumerable<Kitchen> GetKitchenName(string kitchenName);
+        IEnumerable<Kitchen> GetKitchenName(string kitchenName, PaginationParameters paginationParameters);
     }
 }
