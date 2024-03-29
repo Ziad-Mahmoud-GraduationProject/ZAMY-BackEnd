@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <Folder Include="Dtos\Categories\incoming\" />
+    <Folder Include="Dtos\meals\incomming\" />
   </ItemGroup>
 
 </Project>
