@@ -1,4 +1,7 @@
-﻿namespace ZAMY.Domain.Entities
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ZAMY.Domain.Entities
 {
     public class MealPhoto : _BaseEntity
     {
