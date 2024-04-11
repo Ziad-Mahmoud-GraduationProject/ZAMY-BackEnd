@@ -19,7 +19,6 @@
     <Folder Include="Services\CustomerPayments\" />
     <Folder Include="Services\CustomerPhones\" />
     <Folder Include="Services\Discounts\" />
-    <Folder Include="Services\KitchenOwnerPhones\" />
     <Folder Include="Services\MealPhotos\" />
     <Folder Include="Services\PaymentMethods\" />
     <Folder Include="Services\Payments\" />

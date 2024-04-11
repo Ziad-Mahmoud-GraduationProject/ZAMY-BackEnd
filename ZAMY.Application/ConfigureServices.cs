@@ -1,10 +1,12 @@
 ﻿using ZAMY.Application.Services;
 using ZAMY.Application.Services.CartItems;
 using ZAMY.Application.Services.Categories;
+using ZAMY.Application.Services.KitchenOwnerPhones;
 using ZAMY.Application.Services.KitchenPhotos;
 using ZAMY.Application.Services.Kitchens;
 using ZAMY.Application.Services.MainCategories;
 using ZAMY.Application.Services.Orders;
+using ZAMY.Application.Services.Photo;
 using ZAMY.Application.Services.Reviews;
 using ZAMY.Application.Services.SubCategories;
 
@@ -22,7 +24,9 @@ namespace ZAMY.Application
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<ICategoryService, CategoryService>();
-           // services.AddScoped<ITokenServices, TokenServices>();
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<IKitchenOwnerPhoneService, KitchenOwnerPhoneService>();
+            //services.AddScoped<ITokenServices, TokenServices>();
             return services;
         }
     }
