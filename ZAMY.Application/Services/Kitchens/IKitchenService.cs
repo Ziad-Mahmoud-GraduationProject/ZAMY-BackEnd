@@ -12,5 +12,7 @@ namespace ZAMY.Application.Services.Kitchens
         Kitchen? GetById(int id);
         bool IsExists(int id);
         IEnumerable<Kitchen> GetKitchenName(string kitchenName, PaginationParameters paginationParameters);
+        Kitchen Add(Kitchen kitchen);
+        Kitchen Update(Kitchen kitchen);
     }
 }
