@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using ZAMY.Application.Services.KitchenOwnerPhones;
 using ZAMY.Application.Services.Photo;
-using ZAMY.Domain.Entities;
-using ZAMY.Domain.Enums;
+ 
 
 namespace ZAMY.Api.Controllers
 {
@@ -18,33 +17,34 @@ namespace ZAMY.Api.Controllers
         private long imageLength = 1048576;
 
         [HttpGet("")]
-        public ActionResult<ApiResponse> Get([FromQuery] PaginationParameters paginationParameters)
+        public IActionResult Get([FromQuery] PaginationParameters paginationParameters)
         {
             var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetAll(paginationParameters));
 
-            return new ApiResponse();
+            return Ok(kitchens);
 
         }
 
 
 
         [HttpGet("id/{id}")]
-        public ActionResult<ApiResponse> Get(int id)
+        public IActionResult Get(int id)
         {
             var kitchen = _mapper.Map<KitchenDto>(_kitchenService.GetById(id));
 
-            return new ApiResponse();
+            return Ok(kitchen);
 
         }
 
 
 
         [HttpGet("name/{name}")]
-        public ActionResult<ApiResponse> Get(string name, [FromQuery] PaginationParameters paginationParameters)
+        public IActionResult Get(string name, [FromQuery] PaginationParameters paginationParameters)
         {
             var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetKitchenName(name, paginationParameters));
 
-            return new ApiResponse();
+            return Ok(kitchens);
+
 
         }
         [HttpPost("Create")]

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using ZAMY.Api.Dtos.Categories.outcoming;
+using ZAMY.Domain.Entities;
 
 namespace ZAMY.Api.Contaollers
 {
@@ -11,46 +12,44 @@ namespace ZAMY.Api.Contaollers
     {
 
         [HttpGet("")]
-        public ActionResult<ApiResponse> Get()
+        public IActionResult Get()
         { 
             var categories = _mapper.Map<IEnumerable<CategoryDto>>(_categoryService.GetAll());
 
-            return new ApiResponse();
+            return Ok(categories);
         }
 
 
         [HttpGet("id/{id}")]
-        public ActionResult<ApiResponse> Get(int id)
+        public IActionResult Get(int id)
         {
             var category = _mapper.Map<CategoryDto>(_categoryService.GetById(id));
 
-            return new ApiResponse();
+            return Ok(category);
         }
 
         [HttpGet("name/{name}")]
-        public ActionResult<ApiResponse> Get(string name)
+        public IActionResult Get(string name)
         {
             var category = _mapper.Map<IEnumerable<CategoryDto>>(_categoryService.GetByName(name));
 
-
-            return new ApiResponse();
+            return Ok(category);
         }
 
 
         [HttpPost("")]
-        public ActionResult<ApiResponse> Add(CategoryDto categoryDto) 
+        public IActionResult Add(CategoryDto categoryDto) 
         { 
             var category = _categoryService.Add(_mapper.Map<Category>(categoryDto));
 
-            return new ApiResponse();
+            return Ok(category);
         }
 
 
         [HttpPost("{id}")]
-        public ActionResult<ApiResponse> Edit(int id,CategoryDto categoryDto)
+        public IActionResult Edit(int id,CategoryDto categoryDto)
         {
-           
-            return new ApiResponse();
+            return Ok();
         }
     }
 }

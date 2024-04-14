@@ -1,6 +1,10 @@
+using Authentication.Authorization.Helper;
+using Authentication.Authorization.Helper.Helpers;
+using Authentication.Authorization.Helper.Models;
+using Authentication.Authorization.Helper.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -31,18 +35,21 @@ builder.Services
     .AddInfrastructureServices(builder.Configuration);
 
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
-
-//builder.Services.AddAutoMapper(typeof(MappingProfile));
-//builder.Services.AddMappingServices();
+ 
 
 builder.Services.AddScoped<ITokenServices, TokenServices>();
 
-//JWT
-builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
+//JWT.
 
+
+//builder.Services.AddHelperServices(builder.Configuration);
+
+builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 //Authentication
 builder.Services.AddAuthentication(option =>
 {
@@ -61,6 +68,10 @@ builder.Services.AddAuthentication(option =>
             ValidateAudience = false
         };
     });
+
+
+
+
 
 //Swagger
 builder.Services.AddSwaggerGen(c =>

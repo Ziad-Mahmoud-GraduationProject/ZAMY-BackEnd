@@ -10,18 +10,22 @@
   <ItemGroup>
     <Compile Remove="Controllers\**" />
     <Compile Remove="images\**" />
+    <Compile Remove="NewFolder\**" />
     <Content Remove="Controllers\**" />
     <Content Remove="images\**" />
+    <Content Remove="NewFolder\**" />
     <EmbeddedResource Remove="Controllers\**" />
     <EmbeddedResource Remove="images\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Controllers\**" />
     <None Remove="images\**" />
+    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -37,8 +41,13 @@
   <ItemGroup>
     <Folder Include="Dtos\Categories\incoming\" />
     <Folder Include="wwwroot\" />
-    <Folder Include="NewFolder\" />
     <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Authentication.Authorization.Helper">
+      <HintPath>..\ZAMY.Infrastructure\Persistence\Repositories\Authentication.Authorization.Helper.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

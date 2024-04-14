@@ -15,15 +15,8 @@ namespace ZAMY.Api.Middlewares
             {
 
                 _logger.LogError(e, e.Message);
-
-                ApiResponse problemDetails = new()
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    IsSuccess = false,
-                    ErrorMessage = { "Internal Server Error" }
-                };
-
-                string json = JsonSerializer.Serialize(problemDetails);
+ 
+                string json = JsonSerializer.Serialize(Authentication.Authorization.Helper.Helpers.ResponseFinal.InternalServerError);
 
                 await context.Response.WriteAsync(json);
 
