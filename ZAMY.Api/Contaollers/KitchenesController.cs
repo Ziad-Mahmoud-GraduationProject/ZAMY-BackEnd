@@ -15,7 +15,10 @@ namespace ZAMY.Api.Controllers
         {
             var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetAll(paginationParameters));
 
-            return new ApiResponse();
+            return Ok(new ApiResponse()
+            {
+                Result = kitchens
+            });
 
         }
 
