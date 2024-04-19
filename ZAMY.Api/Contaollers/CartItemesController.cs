@@ -49,7 +49,6 @@
 
             cartItem.Quantity = item.Quantity;
             cartItem.MealId = item.MealId;
-            cartItem.orderId = item.orderId;
     
             _cartItemService.Update(cartItem);
             return Ok(cartItem);

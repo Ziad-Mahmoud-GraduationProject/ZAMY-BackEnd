@@ -1,4 +1,4 @@
-﻿
+﻿using Authentication.Authorization.Helper.Helpers;
 using ZAMY.Application.Services.KitchenOwnerPhones;
 using ZAMY.Application.Services.Photo;
  
@@ -17,11 +17,11 @@ namespace ZAMY.Api.Controllers
         private long imageLength = 1048576;
 
         [HttpGet("")]
-        public IActionResult Get([FromQuery] PaginationParameters paginationParameters)
+        public IActionResult Get([FromQuery] Application.Common.Helper.PaginationParameters paginationParameters)
         {
             var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetAll(paginationParameters));
 
-            return new ApiResponse();
+            return Ok(ResponseFinal.Ok(Result: kitchens));
 
         }
 
@@ -39,7 +39,7 @@ namespace ZAMY.Api.Controllers
 
 
         [HttpGet("name/{name}")]
-        public IActionResult Get(string name, [FromQuery] PaginationParameters paginationParameters)
+        public IActionResult Get(string name, [FromQuery] Application.Common.Helper.PaginationParameters paginationParameters)
         {
             var kitchens = _mapper.Map<IEnumerable<KitchenDto>>(_kitchenService.GetKitchenName(name, paginationParameters));
 

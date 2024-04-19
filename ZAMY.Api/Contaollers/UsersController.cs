@@ -40,7 +40,7 @@ namespace ZAMY.Api.Contaollers
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);
 
-            return Ok(result);
+            return Ok(ResponseFinal.Ok(Result : result));
         } 
         [HttpPost("Login")]
         public async Task<IActionResult> GetTokenAsync([FromBody] LoginDto model)
