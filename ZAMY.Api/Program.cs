@@ -1,8 +1,14 @@
+using Authentication.Authorization.Helper;
+using Authentication.Authorization.Helper.Helpers;
+using Authentication.Authorization.Helper.Models;
+using Authentication.Authorization.Helper.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 using ZAMY.Api;
 using ZAMY.Api.Middlewares;
 using ZAMY.Application.Common.Seed;
@@ -14,7 +20,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options=>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,18 +35,21 @@ builder.Services
     .AddInfrastructureServices(builder.Configuration);
 
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddTransient<GlobalExeptionHandlingMiddleware>();
-
-//builder.Services.AddAutoMapper(typeof(MappingProfile));
-//builder.Services.AddMappingServices();
+ 
 
 builder.Services.AddScoped<ITokenServices, TokenServices>();
 
-//JWT
-builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
+//JWT.
 
+
+//builder.Services.AddHelperServices(builder.Configuration);
+
+builder.Services.Configure<JWT>(builder.Configuration.GetSection("JWT"));
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 //Authentication
 builder.Services.AddAuthentication(option =>
 {
@@ -55,6 +68,10 @@ builder.Services.AddAuthentication(option =>
             ValidateAudience = false
         };
     });
+
+
+
+
 
 //Swagger
 builder.Services.AddSwaggerGen(c =>
@@ -117,6 +134,7 @@ catch (Exception)
 }
 
 app.UseHttpsRedirection();
+
 app.UseFileServer();
 app.UseAuthentication();
 app.UseAuthorization();

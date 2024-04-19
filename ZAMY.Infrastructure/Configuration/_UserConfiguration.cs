@@ -1,16 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZAMY.Domain.Common;
+﻿using Authentication.Authorization.Helper.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ZAMY.Infrastructure.Configuration
 {
-    internal class _UserConfiguration : IEntityTypeConfiguration<_UserEntity>
+    internal class _UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
-        public void Configure(EntityTypeBuilder<_UserEntity> builder)
+        public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
             builder.HasKey(user => user.Id);
         }

@@ -50,5 +50,17 @@ namespace ZAMY.Application.Services.Kitchens
         {
            return _unitOfWork.Kitchens.IsExists(k=>k.Id==id);
         }
+        public Kitchen Add(Kitchen kitchen)
+        {
+            _unitOfWork.Kitchens.Add(kitchen);
+            _unitOfWork.Complete();
+            return kitchen;
+        }
+        public Kitchen Update(Kitchen kitchen)
+        {
+            _unitOfWork.Kitchens.Update(kitchen);
+            _unitOfWork.Complete();
+            return kitchen;
+        }
     }
 }

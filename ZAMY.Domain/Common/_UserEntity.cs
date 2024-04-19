@@ -10,15 +10,16 @@ namespace ZAMY.Domain.Common
     public class _UserEntity : IdentityUser
     {
         public string FirstName { get; set; } = null!;
-        public string MiddleName { get; set; } = string.Empty;
         public string LastName { get; set; } = null!;
-        public DateTime BirthOfDate { get; set; }
-        public Gender Gender { get; set; }
-        public string Image { get; set; } = string.Empty;
+
+        public string? MiddleName { get; set; } = string.Empty;
+        public DateTime? BirthOfDate { get; set; }
+       // public Gender? Gender { get; set; }
+        public string? Image { get; set; } = string.Empty;
 
         public DateTime CreateOn { get; set; } = DateTime.Now;
-        public DateTime UpdateOn { get; set; }
-        public DateTime DeleteOn { get; set; }
+        public DateTime? UpdateOn { get; set; }
+        public DateTime? DeleteOn { get; set; }
         public string? CreatedById { get; set; }
         public string? UpdatedById { get; set; }
         public string? DeletedById { get; set; }

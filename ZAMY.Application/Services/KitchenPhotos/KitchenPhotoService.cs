@@ -28,12 +28,12 @@ namespace ZAMY.Application.Services.KitchenPhotos
                 imagefile.CopyTo(fileStream);
             }
            var k=new KitchenPhoto();
-            k.FileName = fileName;
-            k.Image = $"/images/{k.FileName}";
+            /*  k.FileName = fileName;*/
+           // k.Image = $"/images/{k.FileName}";
             _unitofwork.KitchenPhotos.Add(k);
             _unitofwork.Complete();
             return k;
-
+          
             //new KitchenPhoto { FileName = fileName };
             //   imagefile.Filepath = $"/images/{imagefile.Filename}";
         }

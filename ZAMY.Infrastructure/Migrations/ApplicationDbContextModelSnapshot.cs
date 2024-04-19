@@ -178,7 +178,7 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BirthOfDate")
+                    b.Property<DateTime?>("BirthOfDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -191,7 +191,7 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<string>("CreatedById")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DeleteOn")
+                    b.Property<DateTime?>("DeleteOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
@@ -208,11 +208,10 @@ namespace ZAMY.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gender")
+                    b.Property<int?>("Gender")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -229,7 +228,6 @@ namespace ZAMY.Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -255,7 +253,7 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdateOn")
+                    b.Property<DateTime?>("UpdateOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedById")
@@ -756,8 +754,9 @@ namespace ZAMY.Infrastructure.Migrations
                     b.Property<int>("KitchenId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdateOn")
                         .HasColumnType("datetime2");
@@ -790,10 +789,6 @@ namespace ZAMY.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedById")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")

@@ -7,26 +7,48 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\Carts\**" />
+    <Compile Remove="Services\CustomerAddresses\**" />
+    <Compile Remove="Services\CustomerMeals\**" />
+    <Compile Remove="Services\CustomerPayments\**" />
+    <Compile Remove="Services\CustomerPhones\**" />
+    <Compile Remove="Services\Customers\**" />
+    <Compile Remove="Services\Discounts\**" />
+    <Compile Remove="Services\MealPhotos\**" />
+    <Compile Remove="Services\PaymentMethods\**" />
+    <Compile Remove="Services\Payments\**" />
+    <EmbeddedResource Remove="Services\Carts\**" />
+    <EmbeddedResource Remove="Services\CustomerAddresses\**" />
+    <EmbeddedResource Remove="Services\CustomerMeals\**" />
+    <EmbeddedResource Remove="Services\CustomerPayments\**" />
+    <EmbeddedResource Remove="Services\CustomerPhones\**" />
+    <EmbeddedResource Remove="Services\Customers\**" />
+    <EmbeddedResource Remove="Services\Discounts\**" />
+    <EmbeddedResource Remove="Services\MealPhotos\**" />
+    <EmbeddedResource Remove="Services\PaymentMethods\**" />
+    <EmbeddedResource Remove="Services\Payments\**" />
+    <None Remove="Services\Carts\**" />
+    <None Remove="Services\CustomerAddresses\**" />
+    <None Remove="Services\CustomerMeals\**" />
+    <None Remove="Services\CustomerPayments\**" />
+    <None Remove="Services\CustomerPhones\**" />
+    <None Remove="Services\Customers\**" />
+    <None Remove="Services\Discounts\**" />
+    <None Remove="Services\MealPhotos\**" />
+    <None Remove="Services\PaymentMethods\**" />
+    <None Remove="Services\Payments\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ZAMY.Domain\ZAMY.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Common\Models\" />
-    <Folder Include="Services\Carts\" />
-    <Folder Include="Services\Customers\" />
-    <Folder Include="Services\CustomerAddresses\" />
-    <Folder Include="Services\CustomerMeals\" />
-    <Folder Include="Services\CustomerPayments\" />
-    <Folder Include="Services\CustomerPhones\" />
-    <Folder Include="Services\Discounts\" />
-    <Folder Include="Services\KitchenOwnerPhones\" />
-    <Folder Include="Services\MealPhotos\" />
-    <Folder Include="Services\PaymentMethods\" />
-    <Folder Include="Services\Payments\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>

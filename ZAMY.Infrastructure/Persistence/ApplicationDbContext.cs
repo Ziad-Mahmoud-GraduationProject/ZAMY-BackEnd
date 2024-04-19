@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Authentication.Authorization.Helper.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ZAMY.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : IdentityDbContext<_UserEntity>, IApplicationDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

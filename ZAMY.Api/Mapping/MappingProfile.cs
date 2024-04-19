@@ -1,4 +1,7 @@
 ﻿
+using ZAMY.Api.Dtos.meals.incomming;
+using ZAMY.Api.Dtos.meals.outcomming;
+
 namespace ZAMY.Api.Mapping
 {
     public class MappingProfileMainCategory : Profile
@@ -39,6 +42,14 @@ namespace ZAMY.Api.Mapping
         {
             CreateMap<Review, ReviewDto>();
             CreateMap<CreateReview, Review>();
+        }
+    }
+    public class MappingProfileMeal : Profile
+    {
+        public MappingProfileMeal()
+        {
+            CreateMap<Meal, MealDto >();
+            CreateMap <CreateMealDTO, Meal>();
         }
     }
 }

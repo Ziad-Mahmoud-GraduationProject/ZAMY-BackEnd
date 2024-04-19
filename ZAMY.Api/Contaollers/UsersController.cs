@@ -1,842 +1,464 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Authentication.Authorization.Helper.Dtos;
+using Authentication.Authorization.Helper.Helpers;
+using Authentication.Authorization.Helper.Models;
+using Authentication.Authorization.Helper.Services;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System.Data;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.InteropServices;
+using System.Security.Claims;
+using System.Text;
 using ZAMY.Api.Dtos;
-using ZAMY.Domain.Consts;
-using ZAMY.Infrastructure.Persistence;
-
 namespace ZAMY.Api.Contaollers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ITokenServices _token;
-        public UsersController(UserManager<IdentityUser> UserManager , SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager, ITokenServices token)
-        { 
-            _userManager = UserManager;
-            _signInManager = signInManager;
-            _roleManager = roleManager;
-            _token = token;
-        }
-       
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers([FromQuery] PaginationParameters paginationParameters)
+        private readonly IAuthService _authService;
+        private readonly IRoleService _roleService;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly JWT _jwt;
+
+        public UsersController(IAuthService authService, IRoleService roleService, UserManager<ApplicationUser> userManager, IOptions<JWT> jwt)
         {
-            var users = await _userManager.Users.Where(c => c.Id != AppSettings.IdServer).Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
-                .Take(paginationParameters.PageSize).ToListAsync();
-            if (users.Count() == 0)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string> { "Users not found." },
-                });
-            }
+            _authService = authService;
+            _roleService = roleService;
+            _userManager = userManager;
+            _jwt = jwt.Value;
+        }
 
-            var model = new List<UserDto>();
-            foreach (var user in users)
-            {
-                var roles = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-                model.Add(new UserDto
-                {
-                    Email = user.Email,
-                    Id = user.Id,
-                    Phone = user.PhoneNumber,
-                    Username = user.UserName,
-                    Role = roles
-                });
-            }
+        [HttpPost("Register")]
+        public async Task<IActionResult> RegisterAsync(RegisterDto model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return Ok(new ApiResponse
-            {
-                Result = model.OrderBy(x => x.Role),
-                ErrorMessage = new List<string> { "user  found." },
-            });
+            var result = await _authService.RegisterAsync(model);
+
+            if (!result.IsAuthenticated)
+                return BadRequest(result.Message);
+
+            return Ok(result);
+        } 
+        [HttpPost("Login")]
+        public async Task<IActionResult> GetTokenAsync([FromBody] LoginDto model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.GetTokenAsync(model);
+
+            if (!result.IsAuthenticated)
+                return BadRequest(result.Message);
+
+            return Ok(result);
+        }
+
+        [HttpPost("AddRoleToUser")]
+        public async Task<IActionResult> AddRoleAsync([FromBody] AddRoleDto model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.AddRoleAsync(model);
+
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
+
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
+
+            return Ok(result.Message);
+        }
+
+        [HttpPost("AddPermissions")]
+        public async Task<IActionResult> AddPermissions(PermissionsFormDto model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.AddPermissions(model);
+
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
+
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
+
+            return Ok(model);
+        }
+        [HttpGet("GetPermissions")]
+        public async Task<IActionResult> GetPermissions(string roleId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.GetPermissions(roleId);
+
+            if (result == null)
+                return NotFound("");
+
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers([FromQuery] Authentication.Authorization.Helper.Helpers.PaginationParameters paginationParameters)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.GetAllUser(paginationParameters);
+
+            if (result == null)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("GetUserById")]
         public async Task<IActionResult> GetUserById(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string> { $"User with Id = {id} Not Found in System" },
-                });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return Ok(new ApiResponse
-            {
-                Result = new UserDto()
-                {
-                    Email = user.Email,
-                    Id = user.Id,
-                    Phone = user.PhoneNumber,
-                    Username = user.UserName,
-                    Role = (_userManager.GetRolesAsync(user).Result).FirstOrDefault()!,
-                },
-                ErrorMessage = new List<string> { "user  found." },
-            });
+            var result = await _authService.GetUserById(id);
+
+            if (result == null)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("GetUserByUsername")]
         public async Task<IActionResult> GetUserByUsername(string Username)
         {
-            var user = await _userManager.FindByNameAsync(Username);
-            if (user == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string> { $"User with Username = {Username} Not Found in System" },
-                });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return Ok(new ApiResponse
-            {
-                Result = new UserDto()
-                {
-                    Email = user.Email,
-                    Id = user.Id,
-                    Phone = user.PhoneNumber,
-                    Username = user.UserName,
+            var result = await _authService.GetUserByUsername(Username);
 
-                    Role = (_userManager.GetRolesAsync(user).Result).FirstOrDefault()!,
-                },
-                ErrorMessage = new List<string> { "user  found." },
-            });
+            if (result == null)
+                return BadRequest(result);
+
+            return Ok(result);
         }
         [HttpGet("GetUserByEmail")]
         public async Task<IActionResult> GetUserByEmail(string Email)
         {
-            var user = await _userManager.FindByEmailAsync(Email);
-            if (user == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string> { $"User with Email = {Email} Not Found in System" },
-                });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            return Ok(new ApiResponse
-            {
-                Result = new UserDto()
-                {
-                    Email = user.Email,
-                    Id = user.Id,
-                    Phone = user.PhoneNumber,
-                    Username = user.UserName,
-                    Role = (_userManager.GetRolesAsync(user).Result).FirstOrDefault()!,
-                },
-                ErrorMessage = new List<string> { "user  found." },
-            });
+            var result = await _authService.GetUserByEmail(Email);
+
+            if (result == null)
+                return BadRequest(result);
+
+            return Ok(result);
         }
         [HttpGet("GetUsersByRoleName/{roleName}")]
         public async Task<IActionResult> GetUsersByRoleName(string roleName)
         {
-            var role = await _roleManager.FindByNameAsync(roleName);
-            if (role == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string> { "Role not found." },
-                });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var usersInRole = (await _userManager.GetUsersInRoleAsync(role.Name))
-                .Where(x => x.Id != AppSettings.IdServer).Select(user => new UserDto()
-                {
-                    Email = user.Email,
-                    Id = user.Id,
-                    Phone = user.PhoneNumber,
-                    Username = user.UserName,
-                    Role = (_userManager.GetRolesAsync(user).Result).FirstOrDefault()!,
-                });
+            var result = await _authService.GetUsersByRoleName(roleName);
 
-            return Ok(new ApiResponse
-            {
-                Result = usersInRole,
-                ErrorMessage = new List<string> { "Role  found." },
-            });
+            if (result == null)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpGet("GetUsersByRoleId/{roleId}")]
         public async Task<IActionResult> GetUsersByRoleId(string roleId)
         {
-            var role = await _roleManager.FindByIdAsync(roleId);
-            if (role == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string> { "Role not found." },
-                });
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var usersInRole = (await _userManager.GetUsersInRoleAsync(role.Name))
-           .Where(x => x.Id != AppSettings.IdServer).Select(user => new UserDto()
-           {
-               Email = user.Email,
-               Id = user.Id,
-               Phone = user.PhoneNumber,
-               Username = user.UserName,
-               Role = (_userManager.GetRolesAsync(user).Result).FirstOrDefault()!,
-           });
+            var result = await _authService.GetUsersByRoleId(roleId);
 
-            return Ok(new ApiResponse
-            {
-                Result = usersInRole,
-                ErrorMessage = new List<string> { "Role  found." },
-            });
+            if (result == null)
+                return BadRequest(result);
+
+            return Ok(result);
         }
-   
+
+
         [HttpGet("CheackUserIsActiveById")]
         public async Task<IActionResult> CheackUserIsActiveById(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string> { $"User with Id = {id} Not Found in System" },
-                });
-            }
-            if (user.EmailConfirmed)
-            {
-                return Ok(new ApiResponse
-                {
-                    Result = $"User with Id = {id} Is  Active",
-                    ErrorMessage = new List<string> { "user  found." },
-                });
-            }
-            return Ok(new ApiResponse
-            {
-                Result = $"User with Id = {id} Is not Active",
-                ErrorMessage = new List<string> { "user  found." },
-            });
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        } 
- 
-        [AllowAnonymous, HttpPost("LoginAsync")]
-        public async Task<IActionResult> LoginAsync(LoginDto login)
-        {
-            try
-            {
-                var user = await _userManager.FindByEmailAsync(login.Email);
- 
-                if (user == null || !await _userManager.CheckPasswordAsync(user, login.Password))
-                    return BadRequest(new ApiResponse() { IsSuccess = false, StatusCode = HttpStatusCode.BadRequest, ErrorMessage = new List<string> { "Invalid password or email" } });
+            var result = await _authService.CheackUserIsActiveById(id);
 
-                if (!user.EmailConfirmed)
-                {
-                    return BadRequest(new ApiResponse() { IsSuccess = false, StatusCode = HttpStatusCode.BadRequest, ErrorMessage = new List<string> { "email is not active" } });
-                } 
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
 
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
 
+            return Ok(result.Message);
 
-                // create token for the user
-                var Roles = await _userManager.GetRolesAsync(user);
-                var jwtSecurityToken = await _token.GetTokenAsync(await _userManager.GetClaimsAsync(user), Roles, user);
-            
-
-                return Ok(new ApiResponse
-                {
-
-                    ErrorMessage = new List<string>() { "Login Sucsessfully !" },
-                    Result = new AuthReturnDto()
-                    {
-                        Id = user.Id,
-                        Email = user.Email,
-                        Username = user.UserName,
-                        ExpiresOn = jwtSecurityToken.ValidTo,
-                        IsAuthenticated = true,
-                        Roles = Roles.ToList(),
-                        Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-                    },
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string>() { ex.Message },
-                });
-            }
         }
 
-        [HttpPost("RegiserAsync")]
-        public async Task<IActionResult> RegiserAsync(RegisterDto model)
+        [HttpGet("CheackUserIsBlockById")]
+        public async Task<IActionResult> CheackUserIsBlockById(string id)
         {
-            try
-            {
-                if (await _userManager.FindByEmailAsync(model.Email) is not null)
-                    return BadRequest(new ApiResponse { IsSuccess = false, StatusCode = HttpStatusCode.BadRequest, ErrorMessage = new List<string>() { "Email is already registered!" } });
-              
-                IdentityUser user = new()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    UserName = model.Username,
-                    Email = model.Email,
-                    PhoneNumber = model.Phone,
-                };
-                 
-                var result = await _userManager.CreateAsync(user, model.Password);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                if (!result.Succeeded)
-                {
-                    var errors = new List<string>();
+            var result = await _authService.CheackUserIsBlockById(id);
 
-                    foreach (var error in result.Errors)
-                        errors.Add(error.Description);
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = errors,
-                    });
-                }
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
 
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
 
-
-                var role = await _roleManager.FindByNameAsync(model.Role);
-                if (role == null)
-                {
-                    return NotFound(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.NotFound,
-                        ErrorMessage = new List<string> { "Role not found." },
-                    });
-                }
-
-
-                await _userManager.AddToRoleAsync(user, model.Role);
-
-                // create token for the user
-                var Roles = await _userManager.GetRolesAsync(user);
-                var jwtSecurityToken = await _token.GetTokenAsync(await _userManager.GetClaimsAsync(user), Roles, user);
-
-                return Ok(new ApiResponse
-                {
-                    ErrorMessage = new List<string>() { "User Added Sucsessfully !" },
-                    Result = new AuthReturnDto()
-                    {
-                        Id = user.Id,
-                        Email = model.Email,
-                        ExpiresOn = jwtSecurityToken.ValidTo,
-                        IsAuthenticated = true,
-                        Roles = Roles.ToList(),
-                        Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-                        Username = user.UserName
-                    },
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string>() { ex.Message },
-                });
-            }
-
+            return Ok(result.Message);
         }
 
         [HttpPost("ActiveByIdAsync/{id}")]
         public async Task<IActionResult> ActiveByIdAsync(string id)
         {
-            try
-            {
-                var user = await _userManager.FindByIdAsync(id);
-                if (user == null)
-                {
-                    return NotFound(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.NotFound,
-                        ErrorMessage = new List<string> { $"User with Id = {id} Not Found in System" },
-                    });
-                }
-                if (user.EmailConfirmed)
-                {
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = new List<string> { $"User with Id = {id} Is Already Active" },
-                    });
-                }
-                user.EmailConfirmed = true;
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                var result = await _userManager.UpdateAsync(user);
+            var result = await _authService.ActiveByIdAsync(id);
 
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
 
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
 
-                if (!result.Succeeded)
-                {
-                    var errors = new List<string>();
-
-                    foreach (var error in result.Errors)
-                        errors.Add(error.Description);
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = errors,
-                    });
-                }
-
-
-                return Ok(new ApiResponse
-                {
-                    ErrorMessage = new List<string>() { "User Active Sucsessfully !" },
-                    Result = new { },
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string>() { ex.Message },
-                });
-            }
-
+            return Ok(result.Message);
         }
 
         [HttpPost("ActiveByEmailAsync/{email}")]
         public async Task<IActionResult> ActiveByEmailAsync(string email)
         {
-            try
-            {
-                var user = await _userManager.FindByEmailAsync(email);
-                if (user == null)
-                {
-                    return NotFound(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.NotFound,
-                        ErrorMessage = new List<string> { $"User with Email = {email} Not Found in System" },
-                    });
-                }
-                if (user.EmailConfirmed)
-                {
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = new List<string> { $"User with Email = {email} Is Already Active" },
-                    });
-                }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                user.EmailConfirmed = true;
+            var result = await _authService.ActiveByEmailAsync(email);
 
-                var result = await _userManager.UpdateAsync(user);
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
 
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
 
-
-                if (!result.Succeeded)
-                {
-                    var errors = new List<string>();
-
-                    foreach (var error in result.Errors)
-                        errors.Add(error.Description);
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = errors,
-                    });
-                }
-
-
-                return Ok(new ApiResponse
-                {
-                    ErrorMessage = new List<string>() { "User Active Sucsessfully !" },
-                    Result = new { },
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string>() { ex.Message },
-                });
-            }
-
+            return Ok(result.Message);
         }
 
         [HttpPost("ActiveByUserNameAsync/{username}")]
         public async Task<IActionResult> ActiveByUserNameAsync(string username)
         {
-            try
-            {
-                var user = await _userManager.FindByNameAsync(username);
-                if (user == null)
-                {
-                    return NotFound(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.NotFound,
-                        ErrorMessage = new List<string> { $"User with Username = {username} Not Found in System" },
-                    });
-                }
-                if (user.EmailConfirmed)
-                {
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = new List<string> { $"User with Username = {username} Is Already Active" },
-                    });
-                }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            var result = await _authService.ActiveByUserNameAsync(username);
 
-                user.EmailConfirmed = true;
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
 
-                var result = await _userManager.UpdateAsync(user);
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
 
-
-
-                if (!result.Succeeded)
-                {
-                    var errors = new List<string>();
-
-                    foreach (var error in result.Errors)
-                        errors.Add(error.Description);
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = errors,
-                    });
-                }
-
-
-                return Ok(new ApiResponse
-                {
-                    ErrorMessage = new List<string>() { "User Active Sucsessfully !" },
-                    Result = new { },
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string>() { ex.Message },
-                });
-            }
-
+            return Ok(result.Message);
         }
- 
+
         [HttpPost("ChangeRole")]
         public async Task<ActionResult> ChangeUserRole([FromBody] ChangeUserRoleDto model)
         {
             if (!ModelState.IsValid)
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string> { $"{ModelState}", "Model is not valid" },
-                });
+                return BadRequest(ModelState);
 
-            var user = await _userManager.FindByIdAsync(model.UserId);
-            if (user == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string>()
-                          {
-                              "User not found in system",
-                          }
-                });
-            }
+            var result = await _authService.ChangeUserRole(model);
 
-            var roles = await _userManager.GetRolesAsync(user);
-            var currentRole = roles.FirstOrDefault();
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
 
-            if (currentRole == null || currentRole == model.NewRole)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string> { "Invalid role." },
-                });
-            }
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
 
-            var resultRemove = await _userManager.RemoveFromRoleAsync(user, currentRole);
-            var resultAdd = await _userManager.AddToRoleAsync(user, model.NewRole);
-
-            if (resultRemove.Succeeded && resultAdd.Succeeded)
-            {
-                return Ok(new ApiResponse
-                {
-                    Result = model,
-                    ErrorMessage = new List<string>() { $"User's role has been changed to {model.NewRole}." }
-                });
-            }
-            else
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string> { "Failed to change user's role." },
-                });
-            }
+            return Ok(result.Message);
         }
 
-
-        [HttpPost("AddRoleToUserById/{UserId}")]
-        public async Task<ActionResult> AddUserRole(string UserId, string roleName)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string> { $"{ModelState}", "Model is not valid" },
-                });
-
-            var user = await _userManager.FindByIdAsync(UserId);
-            if (user == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string>()
-                          {
-                              "User not found in system",
-                          }
-                });
-            }
-            var role = await _roleManager.FindByNameAsync(roleName);
-            if (role == null)
-            {
-                return NotFound(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.NotFound,
-                    ErrorMessage = new List<string> { "Role not found." },
-                });
-            }
-
-            await _userManager.AddToRoleAsync(user, roleName);
-
-            return Ok(new ApiResponse() { Result="Add Role"});
-        }
- 
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = new List<string> { $"{ModelState}", "Model is not valid" },
-                    });
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            var result = await _authService.ChangePassword(model);
 
-                var user = await _userManager.FindByEmailAsync(model.Email);
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
 
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
 
-
-                if (user == null)
-                    return NotFound(new ApiResponse() { IsSuccess = false, StatusCode = HttpStatusCode.NotFound, ErrorMessage = new List<string>() { "Admin not found" } });
-
-
-                var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                if (!changePasswordResult.Succeeded)
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = new List<string>() { $"{ModelState}", "Error in Result !" },
-                        Result = changePasswordResult.Errors.ToList()
-                    });
-
-                await _signInManager.RefreshSignInAsync(user);
-                return Ok(new ApiResponse
-                {
-                    Result = "Your password has been changed successfully."
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string>() { ex.Message },
-                });
-            }
+            return Ok(result.Message);
         }
 
-       
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.ResetPassword(model);
+
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
+
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
+
+            return Ok(result.Message);
+        }
+
         [HttpPut("UpdateAsync/{id}")]
-        public async Task<IActionResult> UpdateAsync(string id, RegisterDto model)
+        public async Task<IActionResult> UpdateAsync(string id, UpdateUserDto model)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = new List<string> { "Model is not valid" },
-                    });
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                var user = await _userManager.FindByIdAsync(id);
-                if (user == null)
-                {
-                    return NotFound(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.NotFound,
-                        ErrorMessage = new List<string>()
-                          {
-                              "User not found in system",
-                          }
-                    });
-                }
-                var ussername = await _userManager.FindByEmailAsync(model.Email);
-                if (ussername is not null && ussername.Id != user.Id)
-                    return BadRequest(new ApiResponse { IsSuccess = false, StatusCode = HttpStatusCode.BadRequest, ErrorMessage = new List<string>() { "Email is already taken!" } });
-                var UserEmail = await _userManager.FindByNameAsync(model.Username);
-                if (UserEmail is not null && UserEmail.Id != user.Id)
-                    return BadRequest(new ApiResponse { IsSuccess = false, StatusCode = HttpStatusCode.BadRequest, ErrorMessage = new List<string>() { "Username is already taken!" } });
-                var userphone = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.Phone);
-                if (userphone is not null && userphone.Id != user.Id)
-                    return BadRequest(new ApiResponse { IsSuccess = false, StatusCode = HttpStatusCode.BadRequest, ErrorMessage = new List<string>() { "Phone is already taken!" } });
-               
+            var result = await _authService.UpdateAsync(id, model);
 
-                user.UserName = model.Username;
-                user.Email = model.Email;
-                user.PhoneNumber = model.Phone;
-              
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
 
-                var result = await _userManager.UpdateAsync(user);
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
 
-
-
-                if (!result.Succeeded)
-                {
-                    var errors = new List<string>();
-
-                    foreach (var error in result.Errors)
-                        errors.Add(error.Description);
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = errors,
-                    });
-                }
-
-                return Ok(new ApiResponse
-                {
-                    ErrorMessage = new List<string>() { "Update User" }
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string>() { ex.Message },
-                });
-            }
-
-        }
-        [HttpDelete("DeleteActualAsync")]
-        public async Task<IActionResult> DeleteActualAsync(string email)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = new List<string> { $"{ModelState}", "Model is not valid" },
-                    });
-
-
-                var user = await _userManager.FindByEmailAsync(email);
-
-                if (user == null)
-                    return BadRequest(new ApiResponse() { IsSuccess = false, StatusCode = HttpStatusCode.BadRequest, ErrorMessage = new List<string> { "Invalid email" } });
-
-                IdentityResult result = await _userManager.DeleteAsync(user);
-
-                if (!result.Succeeded)
-                {
-                    var errors = new List<string>();
-
-                    foreach (var error in result.Errors)
-                        errors.Add(error.Description);
-                    return BadRequest(new ApiResponse
-                    {
-                        IsSuccess = false,
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorMessage = errors,
-                    });
-                }
-
-                return Ok(new ApiResponse
-                {
-                    Result = "User Deleted !!"
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new ApiResponse
-                {
-                    IsSuccess = false,
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorMessage = new List<string>() { ex.Message },
-                });
-            }
+            return Ok(result.Message);
         }
 
-       
+        [HttpPut("UpdateUsernameAsync/{id}")]
+        public async Task<IActionResult> UpdateAsync(string id, UpdateUsernameforUserDto model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.UpdateUsernameAsync(id, model);
+
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
+
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
+
+            return Ok(model);
+        }
+
+        [HttpPut("UpdateEmaiilAsync/{id}")]
+        public async Task<IActionResult> UpdateAsync(string id, UpdateEmailforUserDto model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.UpdateEmailAsync(id, model);
+
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
+
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
+
+            return Ok(result.Message);
+        }
+
+
+
+        [HttpDelete("DeleteAsync")]
+        public async Task<IActionResult> DeleteAsync(string email)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.DeleteAsync(email);
+
+            if (result.Code == HttpStatusCode.BadRequest)
+                return BadRequest(result.Message);
+
+            if (result.Code == HttpStatusCode.NotFound)
+                return NotFound(result.Message);
+
+            return Ok(result.Message);
+        }
+
+
+
+
+
+
+
+        #region Roles
+        [HttpGet("GetAllRole")]
+        public async Task<IActionResult> GetAllRoles()
+        {
+            var roles = await _roleService.GetRolesAsync();
+
+            if (roles == null) return NotFound("404");
+
+            return Ok(roles);
+        }
+        [HttpGet("GetAllRoles")]
+        public async Task<IActionResult> GetAllRoles([FromQuery] Authentication.Authorization.Helper.Helpers.PaginationParameters paginationParameters)
+        {
+            var roles = await _roleService.GetRolesAsync(paginationParameters);
+
+            if (roles == null) return NotFound("404");
+
+            return Ok(roles);
+        }
+
+        [HttpGet("GetRoleById/Id")]
+        public async Task<IActionResult> GetRoleById(string Id)
+        {
+            var roles = await _roleService.GetRoleAsync(Id);
+
+            if (roles == null) return NotFound("404");
+
+            return Ok(new RoleDto() { Id = roles.Id, Name = roles.Name });
+        }
+        [HttpPost("AddRole")]
+        public async Task<IActionResult> AddRole(string name)
+        {
+            var roles = await _roleService.AddRoleAsync(name);
+
+            if (roles == null) return BadRequest(roles);
+
+            return Ok(roles);
+        }
+        [HttpPut("UpdateRole")]
+        public async Task<IActionResult> UpdateRole(RoleDto role)
+        {
+            var roles = await _roleService.UpdateRoleAsync(role);
+
+            if (roles == null) return BadRequest(roles);
+
+            return Ok(roles);
+        }
+        [HttpDelete("DeleteRole")]
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var roles = await _roleService.DeleteRoleAsync(id);
+
+            if (roles == null) return BadRequest(roles);
+
+            return Ok(roles);
+        }
+
+        #endregion
+
 
     }
 }

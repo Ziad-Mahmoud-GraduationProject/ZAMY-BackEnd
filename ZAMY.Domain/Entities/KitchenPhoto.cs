@@ -3,7 +3,6 @@
     public class KitchenPhoto : _BaseEntity
     {
         public string Image { get; set; }
-        public string FileName { get; set; }
         public int KitchenId { get; set; }
         public Kitchen Kitchen { get; set; }
     }
