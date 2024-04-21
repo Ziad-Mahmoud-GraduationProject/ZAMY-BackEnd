@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text;
 using ZAMY.Api.Dtos;
-namespace ZAMY.Api.Contaollers
+namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

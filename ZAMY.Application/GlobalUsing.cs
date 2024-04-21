@@ -21,6 +21,7 @@ global using System.IdentityModel.Tokens.Jwt;
 global using System.Security.Claims;
 global using ZAMY.Domain.Consts;
 global using ZAMY.Infrastructure;
+global using Microsoft.AspNetCore.Http;
 
 /*
 using System;

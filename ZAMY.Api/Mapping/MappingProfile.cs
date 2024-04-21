@@ -1,55 +1,35 @@
-﻿
-using ZAMY.Api.Dtos.meals.incomming;
-using ZAMY.Api.Dtos.meals.outcomming;
-
-namespace ZAMY.Api.Mapping
+﻿namespace ZAMY.Api.Mapping
 {
-    public class MappingProfileMainCategory : Profile
+
+    public class MappingProfile : Profile
     {
-        public MappingProfileMainCategory()
+        public MappingProfile()
         {
+            CreateMap<Meal, MealDto>();
+            CreateMap<CreateMealDTO, Meal>();
+
             CreateMap<MainCategory, CreateMainCategoryDto>().ReverseMap();
             CreateMap<MainCategory, MainCategoryDto>();
-        }
-    }
-    public class MappingProfileKitchen : Profile
-    {
-        public MappingProfileKitchen()
-        { 
+
             CreateMap<CreateKitchenDto, Kitchen>();
-            CreateMap<Kitchen, KitchenDto>();  
-        }
-    }
-    public class MappingProfileCartItem : Profile
-    {
-        public MappingProfileCartItem()
-        {
+            CreateMap<Kitchen, KitchenDto>();
+
             CreateMap<CreateCartItem, CartItem>();
             CreateMap<CartItem, CartItemDto>();
-        }
-    }
-    public class MappingProfileOrder : Profile
-    {
-        public MappingProfileOrder()
-        {
+
             CreateMap<Order, OrderDto>();
             CreateMap<CreateOrder,Order>();
-        }
-    }
-    public class MappingProfileReview : Profile
-    {
-        public MappingProfileReview()
-        {
+
             CreateMap<Review, ReviewDto>();
             CreateMap<CreateReview, Review>();
+
+
+            CreateMap<CreateAdditionDto, Addition>();
+            CreateMap<EditAdditionDto, Addition>();
+            CreateMap<Addition, AdditionDto>()
+                .ForMember(dest => dest.MealName, opt => opt.MapFrom(src => src.Meal.Name));
+
         }
     }
-    public class MappingProfileMeal : Profile
-    {
-        public MappingProfileMeal()
-        {
-            CreateMap<Meal, MealDto >();
-            CreateMap <CreateMealDTO, Meal>();
-        }
-    }
+
 }

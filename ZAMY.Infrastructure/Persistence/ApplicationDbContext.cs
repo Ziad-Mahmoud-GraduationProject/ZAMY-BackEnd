@@ -9,6 +9,9 @@ namespace ZAMY.Infrastructure.Persistence
         {
 
         }
+
+        public DbSet<Addition> Additions { get; set; }
+        public DbSet<Choice> Choices { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Customer> Customers { get; set; }

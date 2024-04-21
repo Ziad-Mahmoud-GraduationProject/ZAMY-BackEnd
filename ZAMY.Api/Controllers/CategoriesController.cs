@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ZAMY.Api.Dtos.Categories.outcoming;
 using ZAMY.Domain.Entities;
 
-namespace ZAMY.Api.Contaollers
+namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

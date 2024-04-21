@@ -2,6 +2,8 @@
 {
     public interface IUnitOfWork:IDisposable
     {
+        IBaseRepository<Addition> Addition { get; }
+        IBaseRepository<Choice> Choices { get; }
         IBaseRepository<CartItem> CartItems { get; }
         IBaseRepository<Customer> Customers { get; }
         IBaseRepository<Category> Categories { get; }

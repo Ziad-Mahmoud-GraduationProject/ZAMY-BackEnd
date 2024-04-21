@@ -23,9 +23,12 @@ global using ZAMY.Application.Services.Categories;
 global using ZAMY.Application.Services.CartItems;
 global using Bookify.Domain.Consts;
 global using Microsoft.AspNetCore.Http;
-//global using Microsoft.AspNetCore.Mvc;
 global using ZAMY.Application.Services.Reviews;
-//global using ZAMY.Domain.Entities;
+global using ZAMY.Api.Dtos.Additions;
+global using ZAMY.Api.Dtos.meals.incomming;
+global using ZAMY.Api.Dtos.meals.outcomming;
+global using ZAMY.Api.Validation;
+
 
 
 

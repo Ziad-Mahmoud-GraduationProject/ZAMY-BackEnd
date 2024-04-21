@@ -1,4 +1,5 @@
 ﻿using ZAMY.Application.Services;
+using ZAMY.Application.Services.Additions;
 using ZAMY.Application.Services.CartItems;
 using ZAMY.Application.Services.Categories;
 using ZAMY.Application.Services.KitchenOwnerPhones;
@@ -16,6 +17,7 @@ namespace ZAMY.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IAdditionsServices, AdditionsServices>();
             services.AddScoped<IMealService, MealService>();
             services.AddScoped<IMainCategoryService, MainCategoryService>();
             services.AddScoped<ISubCategoryService, SubCategoryService>();

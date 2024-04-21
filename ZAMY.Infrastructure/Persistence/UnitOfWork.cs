@@ -39,6 +39,9 @@
 
         public IBaseRepository<SubCategory> SubCategories => new BaseRepository<SubCategory>(_context);
 
+        public IBaseRepository<Addition> Addition => new BaseRepository<Addition>(_context);
+
+        public IBaseRepository<Choice> Choices => new BaseRepository<Choice>(_context);
 
         public int Complete()
         {

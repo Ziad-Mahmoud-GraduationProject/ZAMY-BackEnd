@@ -1,22 +1,17 @@
-﻿namespace ZAMY.Domain.Entities
+﻿namespace ZAMY.Api.Dtos.Additions
 {
-    public class Addition
+    public class EditAdditionDto
     {
-        public int Id { get; set; }
-
         public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
-        
+
         public decimal Price { get; set; }
 
         public bool IsAvailable { get; set; } = false;
 
-        public string ImgUrl { get; set; } = null!;
+        public IFormFile? Img { get; set; }
 
         public int MealId { get; set; }
-
-        public Meal Meal { get; set; }
-
     }
 }
