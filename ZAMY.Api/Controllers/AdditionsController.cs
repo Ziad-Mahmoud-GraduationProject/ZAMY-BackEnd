@@ -17,7 +17,7 @@
             return Ok(ResponseFinal.Ok(Result:_mapper.Map<AdditionDto>(addition)));
         }
 
-        [HttpGet("{Mealid}")]
+        [HttpGet("meal/{Mealid}")]
         public IActionResult GetAll(int Mealid)
         {
             var additions = _additionService.GetAll(Mealid);

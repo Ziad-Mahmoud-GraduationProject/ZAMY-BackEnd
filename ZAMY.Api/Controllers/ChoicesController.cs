@@ -4,7 +4,7 @@
     [ApiController]
     public class ChoicesController(IChoicesServices _choicesServices ,IMapper _mapper) : ControllerBase
     {
-        [HttpGet("{id}")]
+        [HttpGet("Get/{id}")]
         public IActionResult GetById(int id)
         {
             var choice = _choicesServices.GetById(id);
@@ -16,7 +16,7 @@
             return Ok(ResponseFinal.Ok(Result: _mapper.Map<ChoiceDto>(choice)));
         }
 
-        [HttpGet("{Mealid}")]
+        [HttpGet("Meal/{Mealid}")]
         public IActionResult GetAll(int Mealid)
         {
             var additions = _choicesServices.GetAll(Mealid);
