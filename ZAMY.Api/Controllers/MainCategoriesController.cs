@@ -10,7 +10,7 @@ namespace ZAMY.Api.Controllers
         : ControllerBase
     {
         [HttpGet("GetAll")]
-        public IActionResult GetAll([FromQuery] PaginationParameters paginationParameters)
+        public IActionResult GetAll([FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
         {
                 
                 var maincategories = _mapper.Map<IEnumerable<MainCategoryDto>>(_maincategoryservice.GetAll(paginationParameters));
@@ -49,7 +49,7 @@ namespace ZAMY.Api.Controllers
         }
 
         [HttpGet("GetByName/{name}")]
-        public IActionResult GetByName(string name, [FromQuery] PaginationParameters paginationParameters)
+        public IActionResult GetByName(string name, [FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
         {
             var maincategories = _mapper.Map<MainCategoryDto>(_maincategoryservice.GetCategoryName(name, paginationParameters));
            

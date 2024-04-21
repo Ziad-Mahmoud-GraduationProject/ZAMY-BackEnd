@@ -8,7 +8,7 @@ namespace ZAMY.Api.Controllers
         IMapper _mapper) : ControllerBase
     {
         [HttpGet("GetAll")]
-        public IActionResult GetAll([FromQuery] PaginationParameters paginationParameters)
+        public IActionResult GetAll([FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
         {
             var reviews= _reviewService.GetAll(paginationParameters);
             if(reviews is null)
@@ -16,7 +16,7 @@ namespace ZAMY.Api.Controllers
            return Ok( _mapper.Map<IEnumerable<ReviewDto>>(reviews));
         }
         [HttpGet("NewersReview")]
-        public IActionResult NewersReview([FromQuery] PaginationParameters paginationParameters)
+        public IActionResult NewersReview([FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
         {
             var reviews = _reviewService.NewersReview(paginationParameters);
             if (reviews is null)
@@ -24,7 +24,7 @@ namespace ZAMY.Api.Controllers
             return Ok(_mapper.Map<IEnumerable<ReviewDto>>(reviews));
         }
         [HttpGet("OldersReview")]
-        public IActionResult OldersReview([FromQuery] PaginationParameters paginationParameters)
+        public IActionResult OldersReview([FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
         {
             var reviews = _reviewService.OldersReview(paginationParameters);
             if (reviews is null)

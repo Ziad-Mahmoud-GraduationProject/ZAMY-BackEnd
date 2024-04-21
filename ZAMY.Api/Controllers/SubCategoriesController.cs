@@ -1,5 +1,4 @@
 ﻿using ZAMY.Api.Dtos.subcategories;
-using ZAMY.Application.Common.Helper;
 using ZAMY.Application.Services.SubCategories;
 namespace ZAMY.Api.Controllers
 {
@@ -19,7 +18,7 @@ namespace ZAMY.Api.Controllers
             return Ok(maincategories);
         }
         [HttpGet("GetAllWithPagination")]
-        public IActionResult GetAllWithPagination([FromQuery]PaginationParameters paginationParameters)
+        public IActionResult GetAllWithPagination([FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
         {
 
             var maincategories = _subCategoryService.GetAllWithPagination(paginationParameters);

@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ZAMY.Api.Dtos.meals;
-using ZAMY.Api.Dtos.meals.incomming;
-using ZAMY.Application.Services.Kitchens;
-using ZAMY.Application.Services.Photo;
+﻿using ZAMY.Application.Services.Photo;
 using ZAMY.Application.Services.SubCategories;
 
 namespace ZAMY.Api.Controllers
@@ -20,7 +16,7 @@ namespace ZAMY.Api.Controllers
         private string[] allowedExtention = new string[] { ".jpg", ".png" };
         private long imageLength = 1048576;
         [HttpGet("GetAll")]
-        public IActionResult GetAll([FromQuery] PaginationParameters paginationParameters)
+        public IActionResult GetAll([FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
         {
             var meal = _mealService.GetAll(paginationParameters);
 

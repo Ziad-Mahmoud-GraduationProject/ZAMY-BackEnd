@@ -64,7 +64,7 @@
             return Ok(ResponseFinal.Ok());
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public IActionResult ToggleStatus(int id)
         {
             var toggled = _choicesServices.ToggleStatus(id);
