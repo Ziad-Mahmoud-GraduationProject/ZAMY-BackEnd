@@ -7,5 +7,6 @@
         Addition? Add(Addition addition,IFormFile img);
         Addition? Update(int id, Addition updatedAddition, IFormFile img);
         bool Delete(int id);
+        bool ToggleStatus(int id);
     }
 }

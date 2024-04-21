@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-public class EditAdditionDtoValidator : AbstractValidator<EditAdditionDto>
+﻿public class EditAdditionDtoValidator : AbstractValidator<EditAdditionDto>
 {
     public EditAdditionDtoValidator()
     {

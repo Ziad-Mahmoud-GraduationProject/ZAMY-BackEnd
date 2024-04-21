@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-public class CreateAdditionDtoValidator : AbstractValidator<CreateAdditionDto>
+﻿public class CreateAdditionDtoValidator : AbstractValidator<CreateAdditionDto>
 {
     public CreateAdditionDtoValidator()
     {

@@ -18,7 +18,7 @@
             CreateMap<CartItem, CartItemDto>();
 
             CreateMap<Order, OrderDto>();
-            CreateMap<CreateOrder,Order>();
+            CreateMap<CreateOrder, Order>();
 
             CreateMap<Review, ReviewDto>();
             CreateMap<CreateReview, Review>();
@@ -29,6 +29,11 @@
             CreateMap<Addition, AdditionDto>()
                 .ForMember(dest => dest.MealName, opt => opt.MapFrom(src => src.Meal.Name));
 
+
+
+            CreateMap<ChoiceRequstDto, Choice>();
+            CreateMap<Choice, ChoiceDto>()
+    .ForMember(dest => dest.MealName, opt => opt.MapFrom(src => src.Meal.Name));
         }
     }
 

@@ -1,62 +1,61 @@
 ﻿namespace ZAMY.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class AdditionsController(IAdditionsServices _additionService,IMapper _mapper) : ControllerBase
+    [ApiController]
+    public class ChoicesController(IChoicesServices _choicesServices ,IMapper _mapper) : ControllerBase
     {
-
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var addition = _additionService.GetById(id);
-            if (addition == null)
+            var choice = _choicesServices.GetById(id);
+            if (choice == null)
             {
                 return Ok(ResponseFinal.NotFound());
             }
 
-            return Ok(ResponseFinal.Ok(Result:_mapper.Map<AdditionDto>(addition)));
+            return Ok(ResponseFinal.Ok(Result: _mapper.Map<ChoiceDto>(choice)));
         }
 
         [HttpGet("{Mealid}")]
         public IActionResult GetAll(int Mealid)
         {
-            var additions = _additionService.GetAll(Mealid);
+            var additions = _choicesServices.GetAll(Mealid);
             if (additions == null || !additions.Any())
             {
                 return Ok(ResponseFinal.NotFound());
             }
 
-            return Ok(ResponseFinal.Ok(Result: _mapper.Map<IEnumerable<AdditionDto>>(additions)));
+            return Ok(ResponseFinal.Ok(Result: _mapper.Map<IEnumerable<ChoiceDto>>(additions)));
         }
 
         [HttpPost]
-        public IActionResult Add(CreateAdditionDto addition)
+        public IActionResult Add(ChoiceRequstDto choice)
         {
-            var addedAddition = _additionService.Add(_mapper.Map<Addition>(addition),addition.Img);
-            if (addedAddition == null)
+            var addedchoice = _choicesServices.Add(_mapper.Map<Choice>(choice));
+            if (addedchoice == null)
             {
                 return Ok(ResponseFinal.BadRequest());
             }
 
-            return Ok(ResponseFinal.Ok(Result:addedAddition));
+            return Ok(ResponseFinal.Ok(Result: addedchoice));
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, EditAdditionDto updatedAddition)
+        public IActionResult Update(int id, ChoiceRequstDto choice)
         {
-            var result = _additionService.Update(id, _mapper.Map<Addition>(updatedAddition),updatedAddition.Img);
+            var result = _choicesServices.Update(id, _mapper.Map<Choice>(choice));
             if (result == null)
             {
                 return Ok(ResponseFinal.NotFound());
             }
 
-            return Ok(ResponseFinal.Ok(Result:result));
+            return Ok(ResponseFinal.Ok(Result: result));
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var deleted = _additionService.Delete(id);
+            var deleted = _choicesServices.Delete(id);
             if (!deleted)
             {
                 return Ok(ResponseFinal.NotFound());
@@ -68,7 +67,7 @@
         [HttpDelete("{id}")]
         public IActionResult ToggleStatus(int id)
         {
-            var toggled = _additionService.ToggleStatus(id);
+            var toggled = _choicesServices.ToggleStatus(id);
             if (!toggled)
             {
                 return Ok(ResponseFinal.NotFound());

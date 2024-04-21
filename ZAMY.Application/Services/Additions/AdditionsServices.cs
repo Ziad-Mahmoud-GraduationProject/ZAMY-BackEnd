@@ -60,5 +60,20 @@
 
             return false;
         }
+
+        public bool ToggleStatus(int id)
+        {
+            var addition = GetById(id);
+
+            if (addition is not null)
+            {
+                addition.IsAvailable = !addition.IsAvailable;
+
+                _unitOfWork.Addition.Update(addition);
+                return _unitOfWork.Complete() > 0 ? true : false;
+            }
+            return false;
+
+        }
     }
 }

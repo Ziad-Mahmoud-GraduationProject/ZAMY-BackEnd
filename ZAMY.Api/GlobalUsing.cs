@@ -28,7 +28,8 @@ global using ZAMY.Api.Dtos.Additions;
 global using ZAMY.Api.Dtos.meals.incomming;
 global using ZAMY.Api.Dtos.meals.outcomming;
 global using ZAMY.Api.Validation;
-
-
-
-
+global using Authentication.Authorization.Helper.Helpers;
+global using ZAMY.Api.Dtos.Choices;
+global using ZAMY.Application.Services.Choices;
+global using ZAMY.Application.Services.Additions;
+global using FluentValidation;

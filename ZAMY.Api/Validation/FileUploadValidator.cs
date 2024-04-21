@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-namespace ZAMY.Api.Validation
+﻿namespace ZAMY.Api.Validation
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class FileUploadValidator : ValidationAttribute
