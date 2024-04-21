@@ -37,6 +37,9 @@ namespace ZAMY.Api.Contaollers
 
             var result = await _authService.RegisterAsync(model);
 
+
+
+
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);
 
