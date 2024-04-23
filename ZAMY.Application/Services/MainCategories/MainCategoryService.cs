@@ -32,26 +32,58 @@ namespace ZAMY.Application.Services.MainCategories
             paginationParameters.PageNumber,
                 paginationParameters.PageSize);
         }
+        public MainCategory? Add1(MainCategory maincategory, IFormFile img)
+        {
+            maincategory.ImgUrl = FileHelper.UploadImageAsync(img);
+            _unitOfWork.MainCategories.Add(maincategory);
+
+            return _unitOfWork.Complete() > 0 ? maincategory : null;
+        }
         public MainCategory Add(MainCategory maincategory)
         {
+
             _unitOfWork.MainCategories.Add(maincategory);
             _unitOfWork.Complete();
             return maincategory;
         }
         public MainCategory Update(MainCategory maincategory)
         {
-
+           
 
             _unitOfWork.MainCategories.Update(maincategory);
             _unitOfWork.Complete();
             return maincategory;
         }
-
-        public MainCategory ToggelStatus(MainCategory maincategory)
+        public MainCategory? Update1(int id, MainCategory maincategory, IFormFile img)
         {
-            maincategory.IsDeleted = !maincategory.IsDeleted;
-            _unitOfWork.Complete();
-            return maincategory;
+            var addmaincategory = _unitOfWork.MainCategories.GetById(id);
+
+            if (addmaincategory is not null)
+            {
+                addmaincategory.Name = maincategory.Name;
+
+                if (img is not null)
+                {
+                    var oldPath = addmaincategory.ImgUrl;
+                    addmaincategory.ImgUrl = FileHelper.UploadImageAsync(img);
+
+                    File.Delete(oldPath);
+                }
+                _unitOfWork.MainCategories.Update(addmaincategory);
+                return _unitOfWork.Complete() > 0 ? addmaincategory : null;
+            }
+           return null;
+        }
+        public bool Delete(int id)
+        {
+            var maincategory = _unitOfWork.MainCategories.GetById(id);
+            if (maincategory is not null)
+            {
+                _unitOfWork.MainCategories.Remove(maincategory);
+                return _unitOfWork.Complete() > 0 ? true : false;
+            }
+
+            return false;
         }
     }
 }

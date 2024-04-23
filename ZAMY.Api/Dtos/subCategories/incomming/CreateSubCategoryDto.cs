@@ -1,6 +1,6 @@
-﻿namespace ZAMY.Api.Dtos.mainCategories.incoming
+﻿namespace ZAMY.Api.Dtos.subCategories.incomming
 {
-    public class EditMainCategory
+    public class CreateSubCategoryDto
     {
         public string Name { get; set; } = null!;
         public IFormFile Img { get; set; }

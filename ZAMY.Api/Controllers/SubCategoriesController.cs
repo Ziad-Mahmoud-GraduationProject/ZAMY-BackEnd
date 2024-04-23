@@ -1,45 +1,38 @@
-﻿using ZAMY.Api.Dtos.subcategories;
+﻿
+using ZAMY.Api.Dtos.subCategories.incomming;
+using ZAMY.Api.Dtos.subCategories.outcoming;
 using ZAMY.Application.Services.SubCategories;
 namespace ZAMY.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SubCategoriesController(ISubCategoryService _subCategoryService) : ControllerBase
+    public class SubCategoriesController(ISubCategoryService _subCategoryService,
+        IMapper _mapper) : ControllerBase
     {
+      
         [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
         {
 
-            var maincategories = _subCategoryService.GetAll();
+            var subcategories = _subCategoryService.GetAll(paginationParameters);
 
-            if (maincategories is null)
-                return NotFound("not found any category !");
+            if (subcategories is null)
 
-            return Ok(maincategories);
-        }
-        [HttpGet("GetAllWithPagination")]
-        public IActionResult GetAllWithPagination([FromQuery] ZAMY.Application.Common.Helper.PaginationParameters paginationParameters)
-        {
+                return Ok(ResponseFinal.NotFound());
 
-            var maincategories = _subCategoryService.GetAllWithPagination(paginationParameters);
-
-            if (maincategories is null)
-                return NotFound("not found any category !");
-
-            return Ok(maincategories);
+            return Ok(ResponseFinal.Ok(Result: _mapper.Map<IEnumerable<SubCategoryDto>>(subcategories)));
         }
 
         [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
 
-            var subcategories = _subCategoryService.GetById(id);
+            var subcategory = _subCategoryService.GetById(id);
+            if (subcategory is null)
 
-            if (subcategories is null)
+                return Ok(ResponseFinal.NotFound());
 
-                return NotFound($"not found any category has {id} Id !");
-
-            return Ok(subcategories);
+            return Ok(ResponseFinal.Ok(Result: _mapper.Map<SubCategoryDto>(subcategory)));
         }
         [HttpGet("GetByName/{name}")]
         public IActionResult GetByName(string name)
@@ -49,48 +42,42 @@ namespace ZAMY.Api.Controllers
 
             if (subcategories is null)
 
-                return NotFound($"not found any category has {name} Name !");
+                return Ok(ResponseFinal.NotFound());
 
-            return Ok(subcategories);
+            return Ok(ResponseFinal.Ok(Result: _mapper.Map<SubCategoryDto>(subcategories)));
         }
         [HttpPost("Add")]
-        public IActionResult Add(SubCategoryDto dto)
+        public IActionResult Add(CreateSubCategoryDto dto)
         {
-            var subCategory = new SubCategory
+            var subcategory = _subCategoryService.Add(_mapper.Map<SubCategory>(dto), dto.Img);
+            if (subcategory == null)
             {
-                Name = dto.Name
-            };
-            _subCategoryService.Add(subCategory);
+                return Ok(ResponseFinal.BadRequest());
+            }
 
-            return Ok(subCategory);
+            return Ok(ResponseFinal.Ok(Result: subcategory));
         }
         [HttpPut("Update/{id}")]
-        public IActionResult Update(int id, SubCategoryDto dto)
+        public IActionResult Update(int id, EditSubCategoryDto dto)
         {
-            var subCategory = _subCategoryService.GetById(id);
+            var subcategory = _subCategoryService.Update(id, _mapper.Map<SubCategory>(dto), dto.Img);
+            if (subcategory is null)
+            {
+                return Ok(ResponseFinal.NotFound());
+            }
 
-            if (subCategory is null)
-
-                return NotFound($"not found any category has {id} Id !");
-
-            subCategory.Name = dto.Name;
-
-            _subCategoryService.Update(subCategory);
-
-            return Ok(subCategory);
+            return Ok(ResponseFinal.Ok(Result: subcategory));
         }
         [HttpDelete("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            var subCategory = _subCategoryService.GetById(id);
+            var deleted = _subCategoryService.Delete(id);
+            if (!deleted)
+            {
+                return Ok(ResponseFinal.NotFound());
+            }
 
-            if (subCategory is null)
-
-                return NotFound($"not found any category has {id} Id !");
-
-            _subCategoryService.Delete(subCategory);
-
-            return Ok(subCategory);
+            return Ok(ResponseFinal.Ok());
 
         }
     }

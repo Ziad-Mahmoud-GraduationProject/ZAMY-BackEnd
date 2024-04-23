@@ -1,4 +1,7 @@
-﻿namespace ZAMY.Api.Mapping
+﻿using ZAMY.Api.Dtos.subCategories.incomming;
+using ZAMY.Api.Dtos.subCategories.outcoming;
+
+namespace ZAMY.Api.Mapping
 {
 
     public class MappingProfile : Profile
@@ -10,6 +13,12 @@
 
             CreateMap<MainCategory, CreateMainCategoryDto>().ReverseMap();
             CreateMap<MainCategory, MainCategoryDto>();
+            CreateMap<EditMainCategory, MainCategory>();
+
+            CreateMap<SubCategory, SubCategoryDto>();
+            CreateMap<CreateSubCategoryDto, SubCategory>();
+            CreateMap<EditSubCategoryDto, SubCategory>();
+
 
             CreateMap<CreateKitchenDto, Kitchen>();
             CreateMap<Kitchen, KitchenDto>();

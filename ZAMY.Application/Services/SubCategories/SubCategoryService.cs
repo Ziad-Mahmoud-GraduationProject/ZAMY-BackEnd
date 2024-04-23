@@ -9,10 +9,13 @@ namespace ZAMY.Application.Services.SubCategories
 {
     public class SubCategoryService(IUnitOfWork _unitOfWork) : ISubCategoryService
     {
-        public IEnumerable<SubCategory> GetAll()=> _unitOfWork.SubCategories.GetAll();
-        public PagedList<SubCategory> GetAllWithPagination(PaginationParameters paginationParameters)
+      
+        public PagedList<SubCategory> GetAll(PaginationParameters paginationParameters)
         {
-            return PagedList<SubCategory>.GetPagedList(_unitOfWork.SubCategories.GetAll(),paginationParameters.PageNumber,paginationParameters.PageSize);
+            return PagedList<SubCategory>
+                .GetPagedList(_unitOfWork.SubCategories.GetAll()
+                ,paginationParameters
+                .PageNumber,paginationParameters.PageSize);
         }
         public SubCategory GetById(int id)=> _unitOfWork.SubCategories.GetById(id);
 
@@ -23,23 +26,43 @@ namespace ZAMY.Application.Services.SubCategories
                 .Where(subcategory=>subcategory.Name.ToLower()
                 .Contains(subcategoryname.ToLower()));  
         }
-        public SubCategory Add(SubCategory subcategory)
+        public SubCategory? Add(SubCategory subcategory, IFormFile img)
         {
+           subcategory.ImgUrl = FileHelper.UploadImageAsync(img);
             _unitOfWork.SubCategories.Add(subcategory);
-            _unitOfWork.Complete();
-            return subcategory;
+
+            return _unitOfWork.Complete() > 0 ? subcategory : null;
         }
-        public SubCategory Update(SubCategory subcategory)
+        public SubCategory? Update(int id, SubCategory subcategory, IFormFile img)
         {
-            _unitOfWork.SubCategories.Update(subcategory);
-            _unitOfWork.Complete();
-            return subcategory;
+            var addsubcategory = _unitOfWork.SubCategories.GetById(id);
+
+            if (addsubcategory is not null)
+            {
+                addsubcategory.Name = subcategory.Name;
+
+                if (img is not null)
+                {
+                    var oldPath = addsubcategory.ImgUrl;
+                    addsubcategory.ImgUrl = FileHelper.UploadImageAsync(img);
+
+                    File.Delete(oldPath);
+                }
+                _unitOfWork.SubCategories.Update(addsubcategory);
+                return _unitOfWork.Complete() > 0 ? addsubcategory : null;
+            }
+            return null;
         }
-        public SubCategory Delete(SubCategory subcategory)
+        public bool Delete(int id)
         {
-            _unitOfWork.SubCategories.Remove(subcategory);
-            _unitOfWork.Complete();
-            return subcategory;
+            var subcategory = _unitOfWork.SubCategories.GetById(id);
+            if (subcategory is not null)
+            {
+                _unitOfWork.SubCategories.Remove(subcategory);
+                return _unitOfWork.Complete() > 0 ? true : false;
+            }
+
+            return false;
         }
     }
 }

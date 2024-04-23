@@ -9,13 +9,11 @@ namespace ZAMY.Application.Services.SubCategories
 {
     public interface ISubCategoryService
     {
-
-        IEnumerable<SubCategory> GetAll();
-        PagedList<SubCategory> GetAllWithPagination(PaginationParameters paginationParameters);
+        PagedList<SubCategory> GetAll(PaginationParameters paginationParameters);
         SubCategory GetById(int id);
         IEnumerable<SubCategory> GetCategoryName(string subcategoryname);
-        SubCategory Add(SubCategory subcategory);
-        SubCategory Update(SubCategory subcategory);
-        SubCategory Delete(SubCategory subcategory);
+        SubCategory? Add(SubCategory subcategory,IFormFile img);
+        SubCategory? Update(int id,SubCategory subcategory,IFormFile img);
+        bool Delete(int id);
     }
 }

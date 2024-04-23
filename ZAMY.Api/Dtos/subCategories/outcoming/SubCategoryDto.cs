@@ -1,6 +1,6 @@
-﻿namespace ZAMY.Api.Dtos.mainCategories.outcoming
+﻿namespace ZAMY.Api.Dtos.subCategories.outcoming
 {
-    public class MainCategoryDto
+    public class SubCategoryDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
