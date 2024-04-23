@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZAMY.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using ZAMY.Infrastructure.Persistence;
 namespace ZAMY.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240423130136_sdjdcabdciacac")]
+    partial class sdjdcabdciacac
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -836,7 +839,7 @@ namespace ZAMY.Infrastructure.Migrations
 
                     b.HasIndex("KitchenId");
 
-                    b.ToTable("KitchenPhotos");
+                    b.ToTable("KitchenPhoto");
                 });
 
             modelBuilder.Entity("ZAMY.Domain.Entities.MainCategory", b =>

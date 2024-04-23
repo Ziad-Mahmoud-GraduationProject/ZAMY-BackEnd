@@ -1,10 +1,11 @@
-﻿namespace ZAMY.Api.Controllers
+﻿using ZAMY.Infrastructure.Persistence;
+
+namespace ZAMY.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AdditionsController(IAdditionsServices _additionService,IMapper _mapper) : ControllerBase
-    {
-
+    public class AdditionsController(IAdditionsServices _additionService, IMapper _mapper) : ControllerBase
+    { 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -14,7 +15,7 @@
                 return Ok(ResponseFinal.NotFound());
             }
 
-            return Ok(ResponseFinal.Ok(Result:_mapper.Map<AdditionDto>(addition)));
+            return Ok(ResponseFinal.Ok(Result: _mapper.Map<AdditionDto>(addition)));
         }
 
         [HttpGet("meal/{Mealid}")]
@@ -32,25 +33,25 @@
         [HttpPost]
         public IActionResult Add(CreateAdditionDto addition)
         {
-            var addedAddition = _additionService.Add(_mapper.Map<Addition>(addition),addition.Img);
+            var addedAddition = _additionService.Add(_mapper.Map<Addition>(addition), addition.Img);
             if (addedAddition == null)
             {
                 return Ok(ResponseFinal.BadRequest());
             }
 
-            return Ok(ResponseFinal.Ok(Result:addedAddition));
+            return Ok(ResponseFinal.Ok(Result: addedAddition));
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, EditAdditionDto updatedAddition)
         {
-            var result = _additionService.Update(id, _mapper.Map<Addition>(updatedAddition),updatedAddition.Img);
+            var result = _additionService.Update(id, _mapper.Map<Addition>(updatedAddition), updatedAddition.Img);
             if (result == null)
             {
                 return Ok(ResponseFinal.NotFound());
             }
 
-            return Ok(ResponseFinal.Ok(Result:result));
+            return Ok(ResponseFinal.Ok(Result: result));
         }
 
         [HttpDelete("{id}")]

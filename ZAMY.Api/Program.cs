@@ -117,6 +117,8 @@ if (app.Environment.IsDevelopment())
 }
 
 
+app.UseSwagger();
+app.UseSwaggerUI();
 // Seed Data
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -126,7 +128,8 @@ try
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>(); 
 
     await AddRole.SeedAsync(roleManager);
-    await Adduser.SeedServerAsync(userManager, roleManager ); 
+    await Adduser.SeedServerAsync(userManager, roleManager);
+ 
 }
 catch (Exception)
 {

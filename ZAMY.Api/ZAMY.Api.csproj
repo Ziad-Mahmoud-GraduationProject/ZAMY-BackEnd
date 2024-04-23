@@ -35,7 +35,6 @@
   <ItemGroup>
     <Folder Include="Dtos\Categories\incoming\" />
     <Folder Include="wwwroot\" />
-    <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
   <ItemGroup>
