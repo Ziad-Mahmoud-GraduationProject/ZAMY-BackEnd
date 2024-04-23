@@ -9,13 +9,9 @@
 
   <ItemGroup>
     <Compile Remove="images\**" />
-    <Compile Remove="Seed\**" />
     <Content Remove="images\**" />
-    <Content Remove="Seed\**" />
     <EmbeddedResource Remove="images\**" />
-    <EmbeddedResource Remove="Seed\**" />
     <None Remove="images\**" />
-    <None Remove="Seed\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +34,9 @@
 
   <ItemGroup>
     <Folder Include="Dtos\Categories\incoming\" />
+    <Folder Include="wwwroot\Seeds\Addition\" />
+    <Folder Include="wwwroot\Seeds\Meal\" />
+    <Folder Include="wwwroot\Seeds\SubCategory\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
