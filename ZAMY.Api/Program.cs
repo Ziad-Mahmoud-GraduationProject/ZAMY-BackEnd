@@ -11,7 +11,6 @@ using System.Text;
 using System.Text.Json.Serialization;
 using ZAMY.Api;
 using ZAMY.Api.Middlewares;
-using ZAMY.Api.Seed;
 using ZAMY.Application.Common.Seed;
 using ZAMY.Application.Services;
 using ZAMY.Domain.Common;
@@ -127,19 +126,10 @@ try
 {
     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>(); 
-    var db = services.GetRequiredService<ApplicationDbContext>();
-
-
 
     await AddRole.SeedAsync(roleManager);
     await Adduser.SeedServerAsync(userManager, roleManager);
-    await Mealseed.SeedKitchenAsync(db);
-    await Mealseed.SeedMainCategoryAsync(db);
-    await Mealseed.SeedSupCategoryAsync(db);
-    await Mealseed.SeedOfferAsync(db);
-    await Mealseed.SeedMealAsync(db);
-    await Mealseed.SeedAdditionAsync(db);
-    await Mealseed.SeedChoiceAsync(db);
+ 
 }
 catch (Exception)
 {

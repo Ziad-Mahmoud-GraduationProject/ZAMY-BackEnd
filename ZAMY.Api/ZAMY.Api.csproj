@@ -34,10 +34,7 @@
 
   <ItemGroup>
     <Folder Include="Dtos\Categories\incoming\" />
-    <Folder Include="wwwroot\Seeds\Addition\" />
-    <Folder Include="wwwroot\Seeds\Meal\" />
-    <Folder Include="wwwroot\Seeds\SubCategory\" />
-    <Folder Include="wwwroot\Uploads\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>

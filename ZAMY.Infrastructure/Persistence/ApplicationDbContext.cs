@@ -20,6 +20,7 @@ namespace ZAMY.Infrastructure.Persistence
         public DbSet<CustomerPhone> CustomerPhones { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<Kitchen> Kitchens { get; set; }
+        public DbSet<KitchenPhoto> KitchenPhotos { get; set; }
         public DbSet<MainCategory> MainCategories { get; set; }
         public DbSet<Meal> Meals { get; set; }
         public DbSet<MealPhoto> MealPhotos { get; set; }
